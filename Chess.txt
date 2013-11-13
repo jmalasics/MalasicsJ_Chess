@@ -1,0 +1,6 @@
+pla2
+pdg2
+qla5
+a5 b6
+c4 c7
+a2 b2 c2 d2
