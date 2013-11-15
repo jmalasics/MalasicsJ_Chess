@@ -7,7 +7,7 @@ package PieceManipulation;
  * @author jmalasics
  *
  */
-public class Multimovement extends MovePlace {
+public class Multimovement extends ChessAction {
 
 	private Location secondaryInitialLocation;
 	private Location secondaryEndLocation;

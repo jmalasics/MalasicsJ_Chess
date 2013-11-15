@@ -63,38 +63,39 @@ public class FileIO {
 		}
 	}
 	
-	private MovePlace parseFile() throws IOException {
-		MovePlace movePlace = null;
+	private ChessAction parseFile() throws IOException {
+		ChessAction action = null;
 		String input = textReader.readLine();
 		if (input != null) {
 			input.toLowerCase();
-			Pattern placePattern = Pattern.compile("([bknpqr])([dl])([a-h][1-8])");
-			Matcher placeMatcher = placePattern.matcher(input);
-			Pattern movePattern = Pattern
-					.compile("(([a-h][1-8])\\s([a-h][1-8]))");
-			Matcher moveMatcher = movePattern.matcher(input);
-			Pattern capturePattern = Pattern
-					.compile("([a-h][1-8])\\s([a-h][1-8])([*])");
-			Matcher captureMatcher = capturePattern.matcher(input);
-			Pattern castlePattern = Pattern
-					.compile("(([a-h][1-8])\\s([a-h][1-8]))\\s(([a-h][1-8])\\s([a-h][1-8]))");
-			Matcher castleMatcher = castlePattern.matcher(input);
-			if (placeMatcher.find()) {
-				movePlace = parsePlace(input);
-			} else if (captureMatcher.find()) {
-				movePlace = parseCapture(input);
-			} else if (castleMatcher.find()) {
-				movePlace = parseMultimove(input);
-			} else if (moveMatcher.find()) {
-				movePlace = parseMove(input);
-			} else {
+			action = parsePlace(input);
+			if (action == null) {
+				action = parseCapture(input);
+			}
+			if (action == null) {
+				action = parseMultimove(input);
+			}
+			if (action == null) {
+				action = parseMove(input);
+			} 
+			if (action == null) {
 				System.err.println("Invalid command entered.");
 			}
 		}
-		return movePlace;
+		return action;
 	}
 	
 	private Movement parseMove(String input) {
+		Pattern movePattern = Pattern
+				.compile("(([a-h][1-8])\\s([a-h][1-8]))");
+		Matcher moveMatcher = movePattern.matcher(input);
+		if(moveMatcher.find()) {
+			return CreateMove(input);
+		}
+		return null;
+	}
+	
+	private Movement CreateMove(String input) {
 		int yOne = Integer.parseInt("" + input.charAt(FIRST_Y_COORD));
 		int yTwo = Integer.parseInt("" + input.charAt(SECOND_Y_COORD));
 		char xOne = input.charAt(FIRST_X_COORD);
@@ -109,33 +110,48 @@ public class FileIO {
 	}
 	
 	private Placement parsePlace(String input) {
+		Pattern placePattern = Pattern.compile("([bknpqr])([dl])([a-h][1-8])");
+		Matcher placeMatcher = placePattern.matcher(input);
+		if(placeMatcher.find()) {
+			return CreatePlacement(input);
+		}
+		return null;
+	}
+	
+	private Placement CreatePlacement(String input) {
 		int y = Integer.parseInt("" + input.charAt(PLACEMENT_Y_COORD));
 		Location location = new Location(input.charAt(2), y);
 		Piece piece = determinePiece(input.charAt(PIECE_TYPE), location,
-				determinePieceColor(input.charAt(PIECE_COLOR)));
+			determinePieceColor(input.charAt(PIECE_COLOR)));
 		Placement place = new Placement(location, piece);
 		printPlacement(place);
 		return place;
 	}
 	
 	private void printPlacement(Placement placement) {
-		System.out.println("A " + placement.getPiece().getColor() + " " + placement.getPiece() + " is placed at " + placement.getLocation().toString() + ".");
+		System.out.println("A " + placement.getPiece().getColor() + " " + printPiece(placement.getPiece().toString()) + " is placed at " + placement.getLocation().toString() + ".");
 	}
 	
 	private Multimovement parseMultimove(String input) {
-		int kingYOne = Integer.parseInt("" + input.charAt(KING_Y_COORD_FIRST));
-		int kingYTwo = Integer.parseInt("" + input.charAt(KING_Y_COORD_SECOND));
-		int rookYOne = Integer.parseInt("" + input.charAt(ROOK_Y_FIRST));
-		int rookYTwo = Integer.parseInt("" + input.charAt(ROOK_Y_SECOND));
-		char kingXOne = input.charAt(KING_X_COORD_FIRST);
-		char kingXTwo = input.charAt(KING_X_COORD_SECOND);
-		char rookXOne = input.charAt(ROOK_X_FIRST);
-		char rookXTwo = input.charAt(ROOK_X_SECOND);
-		Multimovement multimove = new Multimovement(new Location(kingXOne, kingYOne),
+		Pattern multimovePattern = Pattern
+				.compile("(([a-h][1-8])\\s([a-h][1-8]))\\s(([a-h][1-8])\\s([a-h][1-8]))");
+		Matcher multimoveMatcher = multimovePattern.matcher(input);
+		if(multimoveMatcher.find()) {
+			int kingYOne = Integer.parseInt("" + input.charAt(KING_Y_COORD_FIRST));
+			int kingYTwo = Integer.parseInt("" + input.charAt(KING_Y_COORD_SECOND));
+			int rookYOne = Integer.parseInt("" + input.charAt(ROOK_Y_FIRST));
+			int rookYTwo = Integer.parseInt("" + input.charAt(ROOK_Y_SECOND));
+			char kingXOne = input.charAt(KING_X_COORD_FIRST);
+			char kingXTwo = input.charAt(KING_X_COORD_SECOND);
+			char rookXOne = input.charAt(ROOK_X_FIRST);
+			char rookXTwo = input.charAt(ROOK_X_SECOND);
+			Multimovement multimove = new Multimovement(new Location(kingXOne, kingYOne),
 				new Location(kingXTwo, kingYTwo), new Location(
 				rookXOne, rookYOne), new Location(rookXTwo, rookYTwo));
-		printMultimove(multimove);
-		return multimove;
+			printMultimove(multimove);
+			return multimove;
+		}
+		return null;
 	}
 	
 	private void printMultimove(Multimovement multimovement) {
@@ -146,13 +162,19 @@ public class FileIO {
 	}
 	
 	private Capture parseCapture(String input) {
-		int yOne = Integer.parseInt("" + input.charAt(FIRST_Y_COORD));
-		int yTwo = Integer.parseInt("" + input.charAt(SECOND_Y_COORD));
-		char xOne = input.charAt(FIRST_X_COORD);
-		char xTwo = input.charAt(SECOND_X_COORD);
-		Capture capture = new Capture(new Location(xOne, yOne), new Location(xTwo, yTwo));
-		printCapture(capture);
-		return capture;
+		Pattern capturePattern = Pattern
+				.compile("([a-h][1-8])\\s([a-h][1-8])([*])");
+		Matcher captureMatcher = capturePattern.matcher(input);
+		if(captureMatcher.find()) {
+			int yOne = Integer.parseInt("" + input.charAt(FIRST_Y_COORD));
+			int yTwo = Integer.parseInt("" + input.charAt(SECOND_Y_COORD));
+			char xOne = input.charAt(FIRST_X_COORD);
+			char xTwo = input.charAt(SECOND_X_COORD);
+			Capture capture = new Capture(new Location(xOne, yOne), new Location(xTwo, yTwo));
+			printCapture(capture);
+			return capture;
+		}
+		return null;
 	}
 	
 	private void printCapture(Capture capture) {
@@ -181,6 +203,22 @@ public class FileIO {
 			piece = new Rook(location, color);
 		}
 		return piece;
+	}
+	
+	private String printPiece(String piece) {
+		String pieceName = "Pawn";
+		if(piece.equals("k")) {
+			pieceName = "King";
+		} else if(piece.equals("q")) {
+			pieceName = "Queen";
+		} else if(piece.equals("b")) {
+			pieceName = "Bishop";
+		} else if(piece.equals("n")) {
+			pieceName = "Knight";
+		} else if(piece.equals("r")) {
+			pieceName = "Rook";
+		}
+		return pieceName;
 	}
 	
 }

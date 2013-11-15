@@ -7,17 +7,17 @@ package PieceManipulation;
  * @author jmalasics
  *
  */
-public abstract class MovePlace {
+public abstract class ChessAction {
 
 	protected Location initialLocation;
 	protected Location endLocation;
 	
-	public MovePlace(Location initial, Location end) {
+	public ChessAction(Location initial, Location end) {
 		initialLocation = initial;
 		endLocation = end;
 	}
 	
-	public MovePlace(Location location) {
+	public ChessAction(Location location) {
 		initialLocation = location;
 	}
 	

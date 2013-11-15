@@ -34,7 +34,7 @@ public class Location {
 	}
 	
 	/**
-	 * Converts a integer vaule (from an array) to the correct character value for the column.
+	 * Converts a integer value (from an array) to the correct character value for the column.
 	 * 
 	 * @param x
 	 * @return
@@ -74,7 +74,7 @@ public class Location {
 	 * @return
 	 */
 	public int getIntX() {
-		return 'a' - xLocation;
+		return xLocation - 'a';
 	}
 	
 	/**

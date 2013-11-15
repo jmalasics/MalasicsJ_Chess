@@ -8,7 +8,7 @@ import Piece.Piece;
  * @author jmalasics
  *
  */
-public class Placement extends MovePlace {
+public class Placement extends ChessAction {
 
 	private Piece piece;
 	

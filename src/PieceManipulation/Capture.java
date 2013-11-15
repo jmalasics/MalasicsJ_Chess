@@ -6,7 +6,7 @@ package PieceManipulation;
  * @author jmalasics
  *
  */
-public class Capture extends MovePlace {
+public class Capture extends ChessAction {
 	
 	public Capture(Location initial, Location end) {
 		super(initial, end);

@@ -7,7 +7,7 @@ package PieceManipulation;
  * @author jmalasics
  *
  */
-public class Movement extends MovePlace {
+public class Movement extends ChessAction {
 	
 	public Movement(Location initial, Location end) {
 		super(initial, end);
