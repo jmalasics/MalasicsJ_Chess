@@ -16,18 +16,38 @@ public class Square {
 		location = loc;
 	}
 	
+	/**
+	 * Returns the color of the square.
+	 * 
+	 * @return
+	 */
 	public Color getColor() {
 		return color;
 	}
 	
+	/**
+	 * Returns the location of the square.
+	 * 
+	 * @return
+	 */
 	public Location getLocation() {
 		return location;
 	}
 	
+	/**
+	 * Set the piece that is on the square.
+	 * 
+	 * @param p
+	 */
 	public void setPiece(Piece p) {
 		piece = p;
 	}
 	
+	/**
+	 * Returns the piece that is on the square.
+	 * 
+	 * @return
+	 */
 	public Piece getPiece() {
 		return piece;
 	}

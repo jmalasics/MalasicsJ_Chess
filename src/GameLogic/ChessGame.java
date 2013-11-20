@@ -38,6 +38,10 @@ public class ChessGame {
 		board = new ChessBoard();
 	}
 	
+	/**
+	 * Runs the program and passes the actions from the IO to the board to be performed then displays the new state of the board.
+	 * 
+	 */
 	public void run() {
 		boolean running = true;
 		while(running) {

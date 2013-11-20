@@ -4,6 +4,11 @@ import Board.ChessBoard;
 
 public class ConsoleGUI {
 	
+	/**
+	 * Displays an ASCII representation of the current state of the chess board into the console.
+	 * 
+	 * @param board
+	 */
 	public void displayBoard(ChessBoard board) {
 		System.out.println("K : Black");
 		System.out.println("k : White");
