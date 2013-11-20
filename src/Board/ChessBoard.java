@@ -90,7 +90,7 @@ public class ChessBoard {
 		boolean actionCompleted = false;
 		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
 			getSquareAt(move.getEndLocation()).setPiece(getPieceAt(move.getInitialLocation()));
-			getSquareAt(move.getInitialLocation());
+			getSquareAt(move.getInitialLocation()).setPiece(null);
 			actionCompleted = true;
 		} else if(isPieceAt(move.getEndLocation())) {
 			System.err.println("There is a piece in the location you are trying to move to.");
