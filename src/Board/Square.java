@@ -1,4 +1,4 @@
-package GUI;
+package Board;
 
 import java.awt.Color;
 
@@ -34,10 +34,15 @@ public class Square {
 
 	@Override
 	public String toString() {
+		String s = "";
 		if(piece == null) {
-			return "[   ]"; 
+			s = "[ - ]"; 
+		} else if(piece.getColor().equals(Color.WHITE)) {
+			s = "[ " + piece.toString() + " ]";
+		} else if(piece.getColor().equals(Color.BLACK)) {
+			s = "[ " + piece.toString().toUpperCase() + " ]";
 		}
-		return "[ " + piece.toString() + " ]";
+		return s;
 	}
 	
 	

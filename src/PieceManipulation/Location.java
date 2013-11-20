@@ -85,6 +85,10 @@ public class Location {
 	public int getY() {
 		return yLocation;
 	}
+	
+	public int getArrayY() {
+		return yLocation - 1;
+	}
 
 	@Override
 	public String toString() {

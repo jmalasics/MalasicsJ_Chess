@@ -12,6 +12,10 @@ public abstract class ChessAction {
 	protected Location initialLocation;
 	protected Location endLocation;
 	
+	public ChessAction() {
+		
+	}
+	
 	public ChessAction(Location initial, Location end) {
 		initialLocation = initial;
 		endLocation = end;
