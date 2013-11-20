@@ -39,7 +39,8 @@ public class ChessGame {
 	}
 	
 	/**
-	 * Runs the program and passes the actions from the IO to the board to be performed then displays the new state of the board.
+	 * Runs the program and passes the actions from the IO to the board to be performed then displays the new state 
+	 * of the board.
 	 * 
 	 */
 	public void run() {

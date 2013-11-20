@@ -18,7 +18,8 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Adds all the squares to the 2 dimensional array that makes up the board itself. Every Square has a color that alternates and also has the location of where the square is.
+	 * Adds all the squares to the 2 dimensional array that makes up the board itself. Every Square has a color that alternates and 
+	 * also has the location of where the square is.
 	 * 
 	 */
 	private void createBoard() {
@@ -30,7 +31,8 @@ public class ChessBoard {
 	}
 	
 	/**
-	 * Determines what the color will be for the squares that are added to the board, based off of where the square is located in the array.
+	 * Determines what the color will be for the squares that are added to the board, based off of where the square is 
+	 * located in the array.
 	 * 
 	 * @param x
 	 * @param y
@@ -69,7 +71,7 @@ public class ChessBoard {
 	private boolean placePiece(Placement place) {
 		boolean actionCompleted = false;
 		if(!isPieceAt(place.getLocation())) {
-			board[place.getLocation().getArrayY()][place.getLocation().getIntX()].setPiece(place.getPiece());
+			getSquareAt(place.getLocation()).setPiece(place.getPiece());
 			actionCompleted = true;
 		} else {
 			System.err.println("There is already a piece in that location.");
@@ -87,8 +89,8 @@ public class ChessBoard {
 	private boolean movePiece(Movement move) {
 		boolean actionCompleted = false;
 		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
-			board[move.getEndLocation().getArrayY()][move.getEndLocation().getIntX()].setPiece(getPieceAt(move.getInitialLocation()));
-			board[move.getInitialLocation().getArrayY()][move.getInitialLocation().getIntX()].setPiece(null);
+			getSquareAt(move.getEndLocation()).setPiece(getPieceAt(move.getInitialLocation()));
+			getSquareAt(move.getInitialLocation());
 			actionCompleted = true;
 		} else if(isPieceAt(move.getEndLocation())) {
 			System.err.println("There is a piece in the location you are trying to move to.");
@@ -108,8 +110,8 @@ public class ChessBoard {
 	private boolean capturePiece(Capture capture) {
 		boolean actionCompleted = false;
 		if(isPieceAt(capture.getEndLocation()) && isPieceAt(capture.getInitialLocation())) {
-			board[capture.getEndLocation().getArrayY()][capture.getEndLocation().getIntX()].setPiece(getPieceAt(capture.getInitialLocation()));
-			board[capture.getInitialLocation().getArrayY()][capture.getInitialLocation().getIntX()].setPiece(null);
+			getSquareAt(capture.getEndLocation()).setPiece(getPieceAt(capture.getInitialLocation()));
+			getSquareAt(capture.getInitialLocation()).setPiece(null);
 			actionCompleted = true;
 		} else if(!isPieceAt(capture.getEndLocation())) {
 			System.err.println("There is no piece to capture at that location.");
@@ -142,7 +144,7 @@ public class ChessBoard {
 	}
 	
 	/**
-	 * Gets a square at the index of the 2 dimensional array.
+	 * Returns the square at the index of the 2 dimensional array.
 	 * 
 	 * @param i
 	 * @param j
@@ -150,6 +152,16 @@ public class ChessBoard {
 	 */
 	public Square getSquareAt(int i, int j) {
 		return board[i][j];
+	}
+	
+	/**
+	 * Returns the square at the specified location.
+	 * 
+	 * @param location
+	 * @return
+	 */
+	private Square getSquareAt(Location location) {
+		return board[location.getArrayY()][location.getIntX()];
 	}
 	
 	/**
