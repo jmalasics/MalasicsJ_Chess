@@ -1,5 +1,7 @@
 package PieceManipulation;
 
+import Board.ChessBoard;
+
 
 /**
  * Super class for all types of movement and placement classes.
@@ -23,6 +25,10 @@ public abstract class ChessAction {
 	
 	public ChessAction(Location location) {
 		initialLocation = location;
+	}
+	
+	public boolean executeAction(ChessBoard board) {
+		return false;
 	}
 	
 }

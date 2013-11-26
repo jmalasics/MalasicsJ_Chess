@@ -1,5 +1,7 @@
 package PieceManipulation;
 
+import Board.ChessBoard;
+
 
 /**
  * Stores the information needed for castling.
@@ -52,6 +54,10 @@ public class Multimovement extends ChessAction {
 	 */
 	public Location getRookEndLocation() {
 		return secondaryEndLocation;
+	}
+	
+	public boolean executeAction(ChessBoard board) {
+		return board.castle(this);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package PieceManipulation;
 
+import Board.ChessBoard;
+
 /**
  * Stores the information needed for capturing pieces.
  * 
@@ -28,6 +30,10 @@ public class Capture extends ChessAction {
 	 */
 	public Location getEndLocation() {
 		return endLocation;
+	}
+	
+	public boolean executeAction(ChessBoard board) {
+		return board.capture(this);
 	}
 
 }

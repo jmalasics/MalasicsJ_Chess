@@ -1,12 +1,32 @@
-kla2
-rlc2
+rda1
+ndb1
+bdc1
+kdd1
+qde1
+bdf1
+ndg1
+rdh1
+pda2
+pdb2
+pdc2
+pdd2
+pde2
+pdf2
 pdg2
-qla5
-ndc4
-a5 b6
-c4 c7
-a2 b2 c2 d2
-qdh7
-rdg7
-c7 b6*
-h7 d2
+pdh2
+pla7
+plb7
+plc7
+pld7
+ple7
+plf7
+plg7
+plh7
+rla8
+nlb8
+blc8
+qld8
+kle8
+blf8
+nlg8
+rlh8

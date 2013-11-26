@@ -1,5 +1,7 @@
 package PieceManipulation;
 
+import Board.ChessBoard;
+
 
 /**
  * Stores all the information needed when moving a piece on the board.
@@ -29,6 +31,10 @@ public class Movement extends ChessAction {
 	 */
 	public Location getEndLocation() {
 		return endLocation;
+	}
+	
+	public boolean executeAction(ChessBoard board) {
+		return board.move(this);
 	}
 	
 }

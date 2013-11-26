@@ -1,5 +1,6 @@
 package PieceManipulation;
 
+import Board.ChessBoard;
 import Piece.Piece;
 
 /**
@@ -33,6 +34,10 @@ public class Placement extends ChessAction {
 	 */
 	public Location getLocation() {
 		return initialLocation;
+	}
+	
+	public boolean executeAction(ChessBoard board) {
+		return board.placePiece(this);
 	}
 	
 }
