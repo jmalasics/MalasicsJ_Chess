@@ -175,8 +175,20 @@ public class ChessBoard {
 	 * @param location
 	 * @return
 	 */
-	private Piece getPieceAt(Location location) {
+	public Piece getPieceAt(Location location) {
 		return getSquareAt(location.getArrayY(), location.getIntX()).getPiece();
+	}
+	
+	public Location getPieceLocation(Piece piece) {
+		Location pieceLocation = null;
+		for(int i = 0; i < BOARD_ROWS; i++) {
+			for(int j = 0; j < BOARD_COLUMNS; j++) {
+				if(board[i][j].getPiece().equals(piece)) {
+					pieceLocation = board[i][j].getLocation();
+				}
+			}
+		}
+		return pieceLocation;
 	}
 	
 }

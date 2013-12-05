@@ -89,6 +89,22 @@ public class Location {
 	public int getArrayY() {
 		return yLocation - 1;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + xLocation;
+		result = prime * result + yLocation;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getX() == ((Location) obj).getX() && this.getY() == ((Location) obj).getY();
+	}
 
 	@Override
 	public String toString() {

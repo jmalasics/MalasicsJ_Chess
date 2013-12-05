@@ -1,14 +1,13 @@
 package Piece;
 
-import java.awt.Color;
-
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
 public class Rook extends Piece {
 	
-	public Rook(Color color) {
-		super(color);
+	public Rook(Team team) {
+		super(team);
 	}
 	
 	@Override
@@ -31,20 +30,7 @@ public class Rook extends Piece {
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
-		boolean isValid = false;
-		int distance = 0;
-		if(capture.getInitialLocation().getIntX() == capture.getEndLocation().getIntX()) {
-			distance = Math.abs(capture.getInitialLocation().getY() - capture.getEndLocation().getY());
-			if(distance > 0) {
-				isValid = true;
-			}
-		} else if(capture.getInitialLocation().getY() == capture.getEndLocation().getY()) {
-			distance = Math.abs(capture.getInitialLocation().getIntX() - capture.getEndLocation().getIntX());
-			if(distance > 0) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
 	@Override

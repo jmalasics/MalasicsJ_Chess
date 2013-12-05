@@ -27,6 +27,14 @@ public abstract class ChessAction {
 		initialLocation = location;
 	}
 	
+	public Location getInitialLocation() {
+		return initialLocation;
+	}
+	
+	public Location getEndLocation() {
+		return endLocation;
+	}
+	
 	public boolean executeAction(ChessBoard board) {
 		return false;
 	}

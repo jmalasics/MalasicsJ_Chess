@@ -1,14 +1,13 @@
 package Piece;
 
-import java.awt.Color;
-
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
 public class Bishop extends Piece {
 
-	public Bishop(Color color) {
-		super(color);
+	public Bishop(Team team) {
+		super(team);
 	}
 	
 	@Override
@@ -35,22 +34,7 @@ public class Bishop extends Piece {
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
-		boolean isValid = false;
-		int distance = Math.abs(capture.getInitialLocation().getIntX() - capture.getEndLocation().getIntX());
-		if(capture.getInitialLocation().getIntX() + distance == capture.getEndLocation().getIntX()) {
-			if(capture.getInitialLocation().getArrayY() + distance == capture.getEndLocation().getArrayY()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getArrayY() - distance == capture.getEndLocation().getArrayY()) {
-				isValid = true;
-			}
-		} else if(capture.getInitialLocation().getIntX() - distance == capture.getEndLocation().getIntX()) {
-			if(capture.getInitialLocation().getArrayY() + distance == capture.getEndLocation().getArrayY()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getArrayY() - distance == capture.getEndLocation().getArrayY()) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 
 	@Override

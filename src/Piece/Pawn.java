@@ -2,6 +2,7 @@ package Piece;
 
 import java.awt.Color;
 
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
@@ -12,8 +13,8 @@ public class Pawn extends Piece {
 	
 	private boolean hasMoved = false;
 	
-	public Pawn(Color color) {
-		super(color);
+	public Pawn(Team team) {
+		super(team);
 	}
 	
 	@Override
@@ -24,12 +25,12 @@ public class Pawn extends Piece {
 		} else if (move.getInitialLocation().getY() + MAX_NORMAL_MOVE == move
 				.getEndLocation().getY()
 				&& move.getInitialLocation().getIntX() == move
-						.getEndLocation().getIntX() && color == Color.BLACK) {
+						.getEndLocation().getIntX() && team.getColor() == Color.BLACK) {
 			isValid = true;
 		} else if (move.getInitialLocation().getY() - MAX_NORMAL_MOVE == move
 				.getEndLocation().getY()
 				&& move.getInitialLocation().getIntX() == move
-						.getEndLocation().getIntX() && color == Color.WHITE) {
+						.getEndLocation().getIntX() && team.getColor() == Color.WHITE) {
 			isValid = true;
 		}
 		return isValid;
@@ -38,7 +39,7 @@ public class Pawn extends Piece {
 	private boolean isValidInitialMove(Movement move) {
 		boolean isValid = false;
 		if (move.getInitialLocation().getIntX() == move.getEndLocation()
-				.getIntX() && color == Color.BLACK) {
+				.getIntX() && team.getColor() == Color.BLACK) {
 			if (move.getInitialLocation().getY() + MAX_INITIAL_MOVE == move
 					.getEndLocation().getY()
 					|| move.getInitialLocation().getY() + MAX_NORMAL_MOVE == move
@@ -46,7 +47,7 @@ public class Pawn extends Piece {
 				isValid = true;
 			}
 		} else if (move.getInitialLocation().getIntX() == move
-				.getEndLocation().getIntX() && color == Color.WHITE) {
+				.getEndLocation().getIntX() && team.getColor() == Color.WHITE) {
 			if (move.getInitialLocation().getY() - MAX_INITIAL_MOVE == move
 					.getEndLocation().getY()
 					|| move.getInitialLocation().getY() - MAX_NORMAL_MOVE == move
@@ -65,14 +66,14 @@ public class Pawn extends Piece {
 				.getIntX() - MAX_NORMAL_MOVE == capture.getEndLocation()
 				.getIntX())
 				&& capture.getInitialLocation().getY() + MAX_NORMAL_MOVE == capture
-						.getEndLocation().getY() && color == Color.BLACK) {
+						.getEndLocation().getY() && team.getColor() == Color.BLACK) {
 			isValid = true;
 		} else if ((capture.getInitialLocation().getIntX() + MAX_NORMAL_MOVE == capture
 				.getEndLocation().getIntX() || capture.getInitialLocation()
 				.getIntX() - MAX_NORMAL_MOVE == capture.getEndLocation()
 				.getIntX())
 				&& capture.getInitialLocation().getY() - MAX_NORMAL_MOVE == capture
-						.getEndLocation().getY() && color == Color.WHITE) {
+						.getEndLocation().getY() && team.getColor() == Color.WHITE) {
 			isValid = true;
 		}
 		return isValid;

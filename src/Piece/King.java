@@ -1,7 +1,6 @@
 package Piece;
 
-import java.awt.Color;
-
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
@@ -9,8 +8,8 @@ public class King extends Piece {
 	
 	private static final int MAX_MOVE_DISTANCE = 1;
 	
-	public King(Color color) {
-		super(color);
+	public King(Team team) {
+		super(team);
 	}
 	
 	@Override
@@ -46,33 +45,7 @@ public class King extends Piece {
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
-		boolean isValid = false;
-		if(capture.getInitialLocation().getY() == capture.getEndLocation().getY()) {
-			if(capture.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if(capture.getInitialLocation().getIntX() == capture.getEndLocation().getIntX()) {
-			if(capture.getInitialLocation().getY() + MAX_MOVE_DISTANCE == capture.getEndLocation().getY()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getY() - MAX_MOVE_DISTANCE == capture.getEndLocation().getY()) {
-				isValid = true;
-			}
-		} else if(capture.getInitialLocation().getY() + MAX_MOVE_DISTANCE == capture.getEndLocation().getY()) {
-			if(capture.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if(capture.getInitialLocation().getY() - MAX_MOVE_DISTANCE == capture.getEndLocation().getY()) {
-			if(capture.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(capture.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
 	@Override

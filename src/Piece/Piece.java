@@ -2,19 +2,24 @@ package Piece;
 
 import java.awt.Color;
 
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
 public abstract class Piece {
 
-	protected Color color;
+	protected Team team;
 	
-	public Piece(Color color) {
-		this.color = color;
+	public Piece(Team team) {
+		this.team = team;
 	}
 	
 	public Color getColor() {
-		return color;
+		return team.getColor();
+	}
+	
+	public Team getTeam() {
+		return team;
 	}
 	
 	/**
@@ -36,5 +41,20 @@ public abstract class Piece {
 	public boolean isValidMove(Movement move) {
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((team == null) ? 0 : team.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this == obj && this.team == ((Piece) obj).team;
+	}
+	
+	
 	
 }

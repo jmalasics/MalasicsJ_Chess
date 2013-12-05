@@ -1,7 +1,6 @@
 package Piece;
 
-import java.awt.Color;
-
+import GameLogic.Team;
 import PieceManipulation.*;
 
 
@@ -10,8 +9,8 @@ public class Knight extends Piece {
 	public static final int INITIAL_MOVE = 2;
 	public static final int SECOND_MOVE = 1;
 	
-	public Knight(Color color) {
-		super(color);
+	public Knight(Team team) {
+		super(team);
 	}
 	
 	@Override
@@ -59,45 +58,7 @@ public class Knight extends Piece {
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
-		boolean isValid = false;
-		if (capture.getInitialLocation().getY() + INITIAL_MOVE == capture
-				.getEndLocation().getY()) {
-			if (capture.getInitialLocation().getIntX() + SECOND_MOVE == capture
-					.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if (capture.getInitialLocation().getIntX()
-					- SECOND_MOVE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if (capture.getInitialLocation().getY() - INITIAL_MOVE == capture
-				.getEndLocation().getY()) {
-			if (capture.getInitialLocation().getIntX() + SECOND_MOVE == capture
-					.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if (capture.getInitialLocation().getIntX()
-					- SECOND_MOVE == capture.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if (capture.getInitialLocation().getIntX() + INITIAL_MOVE == capture
-				.getEndLocation().getIntX()) {
-			if (capture.getInitialLocation().getY() + SECOND_MOVE == capture
-					.getEndLocation().getY()) {
-				isValid = true;
-			} else if (capture.getInitialLocation().getY() - INITIAL_MOVE == capture
-					.getEndLocation().getY()) {
-				isValid = true;
-			}
-		} else if (capture.getInitialLocation().getIntX() - INITIAL_MOVE == capture
-				.getEndLocation().getIntX()) {
-			if (capture.getInitialLocation().getY() + SECOND_MOVE == capture
-					.getEndLocation().getY()) {
-				isValid = true;
-			} else if (capture.getInitialLocation().getY() - INITIAL_MOVE == capture
-					.getEndLocation().getY()) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
 	@Override

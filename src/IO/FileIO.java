@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.io.*;
 import java.util.regex.*;
 
+import GameLogic.Team;
 import Piece.*;
 import PieceManipulation.*;
 
@@ -259,17 +260,17 @@ public class FileIO {
 	 * @return
 	 */
 	private Piece determinePiece(char charForPiece, Color color) {
-		Piece piece = new Pawn(color);
+		Piece piece = new Pawn(new Team(color));
 		if(charForPiece == 'k') {
-			piece = new King(color);
+			piece = new King(new Team(color));
 		} else if(charForPiece == 'q') {
-			piece = new Queen(color);
+			piece = new Queen(new Team(color));
 		} else if(charForPiece == 'b') {
-			piece = new Bishop(color);
+			piece = new Bishop(new Team(color));
 		} else if(charForPiece == 'n') {
-			piece = new Knight(color);
+			piece = new Knight(new Team(color));
 		} else if(charForPiece == 'r') {
-			piece = new Rook(color);
+			piece = new Rook(new Team(color));
 		}
 		return piece;
 	}
