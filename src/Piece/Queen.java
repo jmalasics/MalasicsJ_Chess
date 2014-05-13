@@ -66,6 +66,10 @@ public class Queen extends Piece {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
+	public String getPieceName() {
+		return "Queen";
+	}
+	
 	@Override
 	public String toString() {
 		return "q";

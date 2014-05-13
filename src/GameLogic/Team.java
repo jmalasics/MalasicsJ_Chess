@@ -3,8 +3,7 @@ package GameLogic;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import Piece.King;
-import Piece.Piece;
+import Piece.*;
 import PieceManipulation.*;
 import Board.*;
 
@@ -12,11 +11,11 @@ public class Team {
 
 	private Color teamColor;
 	private ArrayList<Piece> pieces;
-	private ArrayList<ChessAction> possibleMoves;
+	
+	private Location kingLocation;
 	
 	public Team(Color color) {
 		teamColor = color;
-		possibleMoves = new ArrayList<ChessAction>();
 		pieces = new ArrayList<Piece>();
 	}
 	
@@ -28,29 +27,90 @@ public class Team {
 		return pieces;
 	}
 	
-	public void addPiece(Piece piece) {
+	public void addPiece(Piece piece, ChessBoard board) {
 		pieces.add(piece);
+		if(piece instanceof King && piece.getTeam().equals(this)) {
+			kingLocation = board.getPieceLocation(piece);
+		}
 	}
 	
 	public void removePiece(Piece piece) {
 		pieces.remove(piece);
 	}
 	
-	public boolean performAction(ChessAction action, ChessBoard board) {
+	public boolean performAction(ChessAction action, ChessBoard board, Team otherTeam) {
 		boolean actionCompleted = false;
+		findAllAvailableMoves(board, otherTeam);
 		if(isTeamPiece(action.getInitialLocation(), board)) {
-			actionCompleted = action.executeAction(board);
-			findAllAvailableMoves(board);
+		if(containsMove(action, board.getPieceAt(action.getInitialLocation()))) {
+			board.movePiece(action.getInitialLocation(), action.getEndLocation());
+			actionCompleted = true;
+			getKingLocation(board);
+		}
+		//	actionCompleted = action.executeAction(board);
 		} else {
 			System.err.println("Cannot move a piece that isn't yours.");
+			System.err.flush();
 		}
+		findAllAvailableMoves(board, otherTeam);
 		return actionCompleted;
 	}
 	
-	private void findAllAvailableMoves(ChessBoard board) {
-		possibleMoves = new ArrayList<ChessAction>();
+	public boolean containsMove(ChessAction action, Piece piece) {
+		boolean isContained = false;
+		for(ChessAction act : piece.getMoves()) {
+			if(act.equals(action)) {
+				isContained = true;
+			}
+		}
+		return isContained;
+	}
+	
+	/**
+	 * Returns if move puts team in check or not.
+	 * 
+	 * @param action
+	 * @param board
+	 * @return
+	 */
+	public boolean isMovingIntoCheck(ChessAction action, ChessBoard board, Team otherTeam) {
+		Piece capturedPiece = null;
+		boolean isInCheck = false;
+		if(action instanceof Capture) {
+			capturedPiece = board.getPieceAt(action.getEndLocation());
+			board.movePiece(action.getInitialLocation(), action.getEndLocation());
+			if(isInCheck(board, otherTeam.getMoves())) {
+				board.movePiece(action.getEndLocation(), action.getInitialLocation());
+				board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
+				otherTeam.addPiece(capturedPiece, board);
+				isInCheck = true;
+			}
+		} else {
+			board.movePiece(action.getInitialLocation(), action.getEndLocation());
+			if(isInCheck(board, otherTeam.getMoves())) {
+				board.movePiece(action.getEndLocation(), action.getInitialLocation());
+				isInCheck = true;
+			}
+		}
+		return isInCheck;
+	}
+	
+	private void findAllAvailableMoves(ChessBoard board, Team otherTeam) {
 		for(Piece piece : pieces) {
-			addPossibleMoves(allAvailableMovesForPiece(board, piece));
+			piece.clearMoves();
+			addPossibleMoves(piece, allAvailableMovesForPiece(board, piece));
+			if(!(piece instanceof Knight)) {
+				removeBlockedActions(board, piece);
+			}
+			//removeIntoCheckMoves(piece, board, otherTeam);
+		}
+	}
+	
+	private void removeIntoCheckMoves(Piece piece, ChessBoard board, Team otherTeam) {
+		for(int i = 0; i < piece.getMoves().size(); i++) {
+			if(isMovingIntoCheck(piece.getMoves().get(i), board, otherTeam)) {
+				piece.getMoves().remove(piece.getMoves().get(i));
+			}
 		}
 	}
 	
@@ -58,36 +118,102 @@ public class Team {
 		ArrayList<ChessAction> actions = new ArrayList<ChessAction>();
 		for(int i = 0; i < ChessBoard.BOARD_ROWS; i++) {
 			for(int j = 0; j < ChessBoard.BOARD_COLUMNS; j++) {
-				Movement move = new Movement(board.getPieceLocation(piece), new Location(i, j));
-				Capture capture = new Capture(board.getPieceLocation(piece), new Location(i, j));
-				if(piece.isValidMove(move)) {
-					actions.add(move);
-				}
-				if(piece.isValidCapture(capture)) {
-					actions.add(capture);
+				if(board.getPieceAt(new Location(j, i)) == null) {
+					Movement move = new Movement(board.getPieceLocation(piece), new Location(j, i));
+					if(board.canMove(move)) {
+						actions.add(move);
+					}
+				} else if(board.getPieceAt(new Location(j, i)).getColor() != piece.getColor()){
+					Capture capture = new Capture(board.getPieceLocation(piece), new Location(j, i));
+					if(board.canCapture(capture)) {
+						actions.add(capture);
+					}
 				}
 			}
 		}
 		return actions;
 	}
 	
-	private void addPossibleMoves(ArrayList<ChessAction> actions) {
+	private void addPossibleMoves(Piece piece, ArrayList<ChessAction> actions) {
 		for(ChessAction action : actions) {
-			possibleMoves.add(action);
+			piece.addMove(action);
 		}
 	}
 	
 	private boolean isTeamPiece(Location location, ChessBoard board) {
-		return board.getPieceAt(location).getColor() == this.teamColor;
+		return board.getPieceAt(location) != null ? board.getPieceAt(location).getColor() == this.teamColor : false;
 	}
 	
 	public boolean isInCheck(ChessBoard board, ArrayList<ChessAction> enemyActions) {
 		boolean isInCheck = false;
-		Location kingLocation = board.getPieceLocation(new King(this));
 		for(ChessAction action : enemyActions) {
 			isInCheck = action.getEndLocation().equals(kingLocation) ? true : isInCheck;
 		}
 		return isInCheck;
+	}
+	
+	public void printCheckMessage() {
+		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
+		System.out.println("The " + teamColorString +"'s king is in check.");
+	}
+	
+	public void printCheckmateMessage() {
+		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
+		System.out.println(teamColorString + " has been checkmated.");
+	}
+	
+	private void getKingLocation(ChessBoard board) {
+		for(Piece piece : pieces) {
+			if(piece instanceof King && piece.getTeam().equals(this)) {
+				kingLocation = board.getPieceLocation(piece);
+			}
+		}
+	}
+	
+	private boolean isBlockedAction(ChessAction action, ChessBoard board) {
+		boolean isBlocked = false;
+		int xDirection = 0;
+		if(action.getEndLocation().getIntX() - action.getInitialLocation().getIntX() != 0) {
+			xDirection = action.getEndLocation().getIntX() - action.getInitialLocation().getIntX() > 0 ? 1 : -1;
+		}
+		int yDirection = 0;
+		if(action.getEndLocation().getArrayY() - action.getInitialLocation().getArrayY() != 0) {
+			yDirection = action.getEndLocation().getArrayY() - action.getInitialLocation().getArrayY() > 0 ? 1 : -1;
+		}
+		int xValue = action.getInitialLocation().getIntX() + xDirection;
+		int yValue = action.getInitialLocation().getArrayY() + yDirection;
+		while(!reachedActionEndLocation(xValue, yValue, action) && !isBlocked) {
+            if(board.isPieceAt(new Location(xValue, yValue))) {
+                isBlocked = true;
+            }
+            xValue += xDirection;
+            yValue += yDirection;
+        }
+		return isBlocked;
+	}
+
+    private boolean reachedActionEndLocation(int xLocation, int yLocation, ChessAction action) {
+        return xLocation == action.getEndLocation().getIntX() && yLocation == action.getEndLocation().getArrayY();
+    }
+	
+	private void removeBlockedActions(ChessBoard board, Piece piece) {
+		for(int i = 0; i < piece.getMoves().size(); i++) {
+            ChessAction action = piece.getMoves().get(i);
+			if(isBlockedAction(action, board)) {
+				piece.getMoves().remove(piece.getMoves().get(i));
+                i--;
+			}
+		}
+	}
+	
+	public ArrayList<ChessAction> getMoves() {
+		ArrayList<ChessAction> allPossibleMoves = new ArrayList<ChessAction>();
+		for(Piece piece : pieces) {
+			for(ChessAction action : piece.getMoves()) {
+				allPossibleMoves.add(action);
+			}
+		}
+		return allPossibleMoves;
 	}
 
 	@Override
@@ -102,7 +228,7 @@ public class Team {
 	@Override
 	public boolean equals(Object obj) {
 		Team otherTeam = (Team) obj;
-		return this.teamColor == otherTeam.getColor() && this.pieces == otherTeam.getPieces();
+		return this.teamColor == otherTeam.getColor();
 	}
 	
 	

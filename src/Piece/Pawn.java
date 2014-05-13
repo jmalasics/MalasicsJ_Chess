@@ -11,10 +11,11 @@ public class Pawn extends Piece {
 	public static final int MAX_INITIAL_MOVE = 2;
 	public static final int MAX_NORMAL_MOVE = 1;
 	
-	private boolean hasMoved = false;
+	private boolean hasMoved;
 	
 	public Pawn(Team team) {
 		super(team);
+		hasMoved = false;
 	}
 	
 	@Override
@@ -77,6 +78,13 @@ public class Pawn extends Piece {
 			isValid = true;
 		}
 		return isValid;
+	}
+	
+	public void pawnHasMoved() {
+		hasMoved = true;
+	}
+	public String getPieceName() {
+		return "Pawn";
 	}
 	
 	@Override

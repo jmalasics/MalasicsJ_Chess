@@ -39,4 +39,31 @@ public abstract class ChessAction {
 		return false;
 	}
 	
+	public int getXDirection() {
+		return 0;
+	}
+	
+	public int getYDirection() {
+		return 0;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((endLocation == null) ? 0 : endLocation.hashCode());
+		result = prime * result
+				+ ((initialLocation == null) ? 0 : initialLocation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		ChessAction action = (ChessAction) obj;
+		return this == action && this.initialLocation.equals(action.getInitialLocation()) && this.endLocation.equals(action.getEndLocation());
+	}
+	
+	
+	
 }

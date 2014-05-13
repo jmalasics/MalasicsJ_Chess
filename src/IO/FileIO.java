@@ -62,6 +62,7 @@ public class FileIO {
 				action = new InvalidAction();
 			}
 		}
+		System.out.flush();
 		return action;
 	}
 	

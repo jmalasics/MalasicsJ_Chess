@@ -33,6 +33,10 @@ public class Rook extends Piece {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
+	public String getPieceName() {
+		return "Rook";
+	}
+	
 	@Override
 	public String toString() {
 		return "r";

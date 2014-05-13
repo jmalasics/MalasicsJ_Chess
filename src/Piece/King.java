@@ -48,6 +48,10 @@ public class King extends Piece {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}
 	
+	public String getPieceName() {
+		return "King";
+	}
+	
 	@Override
 	public String toString() {
 		return "k";

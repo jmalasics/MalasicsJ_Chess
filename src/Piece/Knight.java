@@ -15,50 +15,43 @@ public class Knight extends Piece {
 	
 	@Override
 	public boolean isValidMove(Movement move) {
-		boolean isValid = false;
-		if (move.getInitialLocation().getY() + INITIAL_MOVE == move
-				.getEndLocation().getY()) {
-			if (move.getInitialLocation().getIntX() + SECOND_MOVE == move
-					.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if (move.getInitialLocation().getIntX()
-					- SECOND_MOVE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if (move.getInitialLocation().getY() - INITIAL_MOVE == move
-				.getEndLocation().getY()) {
-			if (move.getInitialLocation().getIntX() + SECOND_MOVE == move
-					.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if (move.getInitialLocation().getIntX()
-					- SECOND_MOVE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if (move.getInitialLocation().getIntX() + INITIAL_MOVE == move
-				.getEndLocation().getIntX()) {
-			if (move.getInitialLocation().getY() + SECOND_MOVE == move
-					.getEndLocation().getY()) {
-				isValid = true;
-			} else if (move.getInitialLocation().getY() - INITIAL_MOVE == move
-					.getEndLocation().getY()) {
-				isValid = true;
-			}
-		} else if (move.getInitialLocation().getIntX() - INITIAL_MOVE == move
-				.getEndLocation().getIntX()) {
-			if (move.getInitialLocation().getY() + SECOND_MOVE == move
-					.getEndLocation().getY()) {
-				isValid = true;
-			} else if (move.getInitialLocation().getY() - INITIAL_MOVE == move
-					.getEndLocation().getY()) {
-				isValid = true;
-			}
-		}
-		return isValid;
+		return checkUpMove(move) || checkDownMove(move) || checkRightMove(move) || checkLeftMove(move);
+	}
+	
+	private boolean checkUpMove(Movement move) {
+		return move.getInitialLocation().getY() + INITIAL_MOVE == move
+				.getEndLocation().getY() && (move.getInitialLocation().getIntX() + SECOND_MOVE == move
+				.getEndLocation().getIntX() || move.getInitialLocation().getIntX()
+				- SECOND_MOVE == move.getEndLocation().getIntX()) ? true : false;
+	}
+	
+	private boolean checkDownMove(Movement move) {
+		return move.getInitialLocation().getY() - INITIAL_MOVE == move
+				.getEndLocation().getY() && (move.getInitialLocation().getIntX() + SECOND_MOVE == move
+					.getEndLocation().getIntX() || move.getInitialLocation().getIntX()
+					- SECOND_MOVE == move.getEndLocation().getIntX()) ? true : false;
+	}
+	
+	private boolean checkRightMove(Movement move) {
+		return move.getInitialLocation().getIntX() + INITIAL_MOVE == move
+				.getEndLocation().getIntX() && (move.getInitialLocation().getY() + SECOND_MOVE == move
+				.getEndLocation().getY() || move.getInitialLocation().getY() - INITIAL_MOVE == move
+				.getEndLocation().getY()) ? true : false;
+	}
+	
+	private boolean checkLeftMove(Movement move) {
+		return move.getInitialLocation().getIntX() - INITIAL_MOVE == move
+				.getEndLocation().getIntX() && (move.getInitialLocation().getY() + SECOND_MOVE == move
+					.getEndLocation().getY() || move.getInitialLocation().getY() + SECOND_MOVE == move
+					.getEndLocation().getY()) ? true : false;
 	}
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
+	}
+	public String getPieceName() {
+		return "Knight";
 	}
 	
 	@Override

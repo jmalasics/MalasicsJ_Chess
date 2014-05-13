@@ -22,6 +22,7 @@ public class ConsoleGUI {
 				}
 			}
 		}
+		System.out.flush();
 	}
 	
 }

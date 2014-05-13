@@ -3,6 +3,7 @@ package Board;
 import java.awt.Color;
 
 import Piece.Piece;
+import Piece.Pawn;
 import PieceManipulation.*;
 
 public class ChessBoard {
@@ -25,7 +26,7 @@ public class ChessBoard {
 	private void createBoard() {
 		for (int i = 0; i < BOARD_ROWS; i++) {
 			for (int j = 0; j < BOARD_COLUMNS; j++) {
-				board[i][j] = new Square(getColor(i, j), new Location(i, j));
+				board[i][j] = new Square(getColor(i, j), new Location(j, i));
 			}
 		}
 	}
@@ -59,6 +60,16 @@ public class ChessBoard {
 		return actionCompleted;
 	}
 	
+	public boolean canMove(Movement move) {
+		boolean actionCompleted = false;
+		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
+			if(getPieceAt(move.getInitialLocation()).isValidMove(move)) {
+				actionCompleted = true;
+			}
+		}
+		return actionCompleted;
+	}
+	
 	/**
 	 * Moves a piece on the board if no piece is on the square it is moving to and there is a piece on the starting location for 
 	 * the move. If not an error message displaying what the problem is with the move.
@@ -79,6 +90,18 @@ public class ChessBoard {
 			System.err.println("There is a piece in the location you are trying to move to.");
 		} else if(!isPieceAt(move.getInitialLocation())) {
 			System.err.println("There is no piece at that location.");
+		}
+		return actionCompleted;
+	}
+	
+	public boolean canCapture(Capture capture) {
+		boolean actionCompleted = false;
+		if(isPieceAt(capture.getEndLocation()) && isPieceAt(capture.getInitialLocation())) {
+			if(!getPieceAt(capture.getInitialLocation()).getColor().equals(getPieceAt(capture.getEndLocation()).getColor())) {
+				if(getPieceAt(capture.getInitialLocation()).isValidCapture(capture)) {
+					actionCompleted = true;
+				}
+			}
 		}
 		return actionCompleted;
 	}
@@ -111,7 +134,10 @@ public class ChessBoard {
 		return actionCompleted;
 	}
 	
-	private void movePiece(Location initial, Location end) {
+	public void movePiece(Location initial, Location end) {
+		if(getPieceAt(initial) instanceof Pawn) {
+			((Pawn) getPieceAt(initial)).pawnHasMoved();
+		}
 		getSquareAt(end).setPiece(getPieceAt(initial));
 		getSquareAt(initial).setPiece(null);
 	}
@@ -165,8 +191,8 @@ public class ChessBoard {
 	 * @param location
 	 * @return
 	 */
-	private boolean isPieceAt(Location location) {
-		return getSquareAt(location.getArrayY(), location.getIntX()).getPiece() != null;
+	public boolean isPieceAt(Location location) {
+		return getSquareAt(location).getPiece() != null;
 	}
 	
 	/**
@@ -176,15 +202,17 @@ public class ChessBoard {
 	 * @return
 	 */
 	public Piece getPieceAt(Location location) {
-		return getSquareAt(location.getArrayY(), location.getIntX()).getPiece();
+		return getSquareAt(location).getPiece();
 	}
 	
 	public Location getPieceLocation(Piece piece) {
 		Location pieceLocation = null;
 		for(int i = 0; i < BOARD_ROWS; i++) {
 			for(int j = 0; j < BOARD_COLUMNS; j++) {
-				if(board[i][j].getPiece().equals(piece)) {
-					pieceLocation = board[i][j].getLocation();
+				if(board[i][j].getPiece() != null) {
+					if(board[i][j].getPiece().equals(piece)) {
+						pieceLocation = board[i][j].getLocation();
+					}
 				}
 			}
 		}

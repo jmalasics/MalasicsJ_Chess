@@ -103,7 +103,7 @@ public class Location {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.getX() == ((Location) obj).getX() && this.getY() == ((Location) obj).getY();
+		return (obj != null) && obj instanceof Location && this.getIntX() == ((Location) obj).getIntX() && (this.getY() == ((Location) obj).getY());
 	}
 
 	@Override

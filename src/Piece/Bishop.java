@@ -32,6 +32,10 @@ public class Bishop extends Piece {
 		return isValid;
 	}
 	
+	public String getPieceName() {
+		return "Bishop";
+	}
+	
 	@Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));

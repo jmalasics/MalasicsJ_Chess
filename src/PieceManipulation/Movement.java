@@ -37,4 +37,28 @@ public class Movement extends ChessAction {
 		return board.move(this);
 	}
 	
+	public int getXDirection() {
+		int xDirection = 0;
+		if (initialLocation.getIntX()
+				- endLocation.getIntX() > 0) {
+			xDirection = -1;
+		} else if (initialLocation.getIntX()
+				- endLocation.getIntX() < 0) {
+			xDirection = 1;
+		}
+		return xDirection;
+	}
+
+	public int getYDirection() {
+		int yDirection = 0;
+		if (initialLocation.getY()
+				- endLocation.getY() > 0) {
+			yDirection = -1;
+		} else if (initialLocation.getY()
+				- endLocation.getY() < 0) {
+			yDirection = 1;
+		}
+		return yDirection;
+	}
+	
 }
