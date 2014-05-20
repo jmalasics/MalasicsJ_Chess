@@ -59,5 +59,16 @@ public class Multimovement extends ChessAction {
 	public boolean executeAction(ChessBoard board) {
 		return board.castle(this);
 	}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Multimovement && this.getInitialLocation().equals(((Multimovement) obj).getKingInitialLocation()) && this.getEndLocation().equals(((Multimovement) obj).getKingEndLocation())
+                && this.getRookInitialLocation().equals(((Multimovement) obj).getRookInitialLocation()) && this.getRookEndLocation().equals(((Multimovement) obj).getRookEndLocation());
+    }
 	
 }

@@ -60,4 +60,14 @@ public class Capture extends ChessAction {
 		return yDirection;
 	}
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Capture && this.getInitialLocation().equals(((Capture) obj).getInitialLocation()) && this.getEndLocation().equals(((Capture) obj).getEndLocation());
+    }
+
 }

@@ -1,8 +1,8 @@
-package GUI;
+package UI;
 
 import Board.ChessBoard;
 
-public class ConsoleGUI {
+public class Console implements UI {
 	
 	/**
 	 * Displays an ASCII representation of the current state of the chess board into the console.

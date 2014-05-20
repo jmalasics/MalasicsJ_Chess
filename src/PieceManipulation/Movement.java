@@ -60,5 +60,15 @@ public class Movement extends ChessAction {
 		}
 		return yDirection;
 	}
-	
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Movement && this.getInitialLocation().equals(((Movement) obj).getInitialLocation()) && this.getEndLocation().equals(((Movement) obj).getEndLocation());
+    }
+
 }

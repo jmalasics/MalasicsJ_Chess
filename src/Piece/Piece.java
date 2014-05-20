@@ -44,9 +44,7 @@ public abstract class Piece {
 	 * @param capture
 	 * @return
 	 */
-	public boolean isValidCapture(Capture capture) {
-		return false;
-	}
+	public abstract boolean isValidCapture(Capture capture);
 	
 	/**
 	 * Returns if the movement is valid for the piece.
@@ -54,13 +52,41 @@ public abstract class Piece {
 	 * @param move
 	 * @return
 	 */
-	public boolean isValidMove(Movement move) {
-		return false;
-	}
+	public abstract boolean isValidMove(Movement move);
 	
-	public String getPieceName() {
-		return "-";
-	}
+	public abstract String getPieceName();
+
+    protected boolean isValidNorthMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getArrayY() + distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
+    }
+
+    protected boolean isValidSouthMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getArrayY() - distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
+    }
+
+    protected boolean isValidEastMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() + distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() == action.getEndLocation().getArrayY();
+    }
+
+    protected boolean isValidWestMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() - distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() == action.getEndLocation().getArrayY();
+    }
+
+    protected boolean isValidNorthEastMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() + distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() + distance == action.getEndLocation().getArrayY();
+    }
+
+    protected boolean isValidNorthWestMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() - distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() + distance == action.getEndLocation().getArrayY();
+    }
+
+    protected boolean isValidSouthEastMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() + distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() - distance == action.getEndLocation().getArrayY();
+    }
+
+    protected boolean isValidSouthWestMovement(int distance, int maxDistance, ChessAction action) {
+        return distance <= maxDistance && action.getInitialLocation().getIntX() - distance == action.getEndLocation().getIntX() && action.getInitialLocation().getArrayY() - distance == action.getEndLocation().getArrayY();
+    }
 
 	@Override
 	public int hashCode() {

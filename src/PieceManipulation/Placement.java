@@ -39,5 +39,15 @@ public class Placement extends ChessAction {
 	public boolean executeAction(ChessBoard board) {
 		return board.placePiece(this);
 	}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Placement && this.getLocation().equals(((Placement) obj).getLocation()) && this.getPiece().equals(((Placement) obj).getPiece());
+    }
 	
 }

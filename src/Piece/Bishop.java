@@ -6,13 +6,20 @@ import PieceManipulation.*;
 
 public class Bishop extends Piece {
 
+    private static final int MAX_MOVE_DISTANCE = 8;
+
 	public Bishop(Team team) {
 		super(team);
 	}
 	
 	@Override
 	public boolean isValidMove(Movement move) {
-		boolean isValid = false;
+        int distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
+        return distance > 0 && (isValidNorthEastMovement(distance, MAX_MOVE_DISTANCE, move) || isValidNorthWestMovement(distance, MAX_MOVE_DISTANCE, move) || isValidSouthEastMovement(distance, MAX_MOVE_DISTANCE, move)
+                || isValidSouthWestMovement(distance, MAX_MOVE_DISTANCE, move));
+
+        /**
+        boolean isValid = false;
 		int distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
 		if(distance > 0) {
 			if(move.getInitialLocation().getIntX() + distance == move.getEndLocation().getIntX()) {
@@ -30,6 +37,7 @@ public class Bishop extends Piece {
 			}
 		}
 		return isValid;
+        */
 	}
 	
 	public String getPieceName() {

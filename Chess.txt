@@ -1,8 +1,8 @@
 rda1
 ndb1
 bdc1
-kdd1
-qde1
+qdd1
+kde1
 bdf1
 ndg1
 rdh1

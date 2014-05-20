@@ -20,6 +20,18 @@ public class Pawn extends Piece {
 	
 	@Override
 	public boolean isValidMove(Movement move) {
+        int distance = Math.abs(move.getInitialLocation().getArrayY() - move.getEndLocation().getArrayY());
+        boolean isValid = false;
+        if(!hasMoved) {
+            isValid = isValidInitialMove(move, distance);
+        } else if(team.getColor() == Color.BLACK) {
+            isValid = isValidSouthMovement(distance, MAX_NORMAL_MOVE, move);
+        } else if(team.getColor() == Color.WHITE) {
+            isValid = isValidNorthMovement(distance, MAX_NORMAL_MOVE, move);
+        }
+        return isValid;
+
+        /**
 		boolean isValid = false;
 		if(!hasMoved) {
 			isValid = isValidInitialMove(move);
@@ -35,9 +47,19 @@ public class Pawn extends Piece {
 			isValid = true;
 		}
 		return isValid;
+        */
 	}
 	
-	private boolean isValidInitialMove(Movement move) {
+	private boolean isValidInitialMove(Movement move, int distance) {
+        boolean isValid = false;
+        if(team.getColor() == Color.BLACK) {
+            isValid = isValidSouthMovement(distance, MAX_INITIAL_MOVE, move);
+        } else if(team.getColor() == Color.WHITE) {
+            isValid = isValidNorthMovement(distance, MAX_INITIAL_MOVE, move);
+        }
+        return isValid;
+
+        /**
 		boolean isValid = false;
 		if (move.getInitialLocation().getIntX() == move.getEndLocation()
 				.getIntX() && team.getColor() == Color.BLACK) {
@@ -57,10 +79,21 @@ public class Pawn extends Piece {
 			}
 		}
 		return isValid;
+        */
 	}
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {
+        int distance = Math.abs(capture.getInitialLocation().getArrayY() - capture.getEndLocation().getArrayY());
+        boolean isValid = false;
+        if(team.getColor() == Color.BLACK) {
+            isValid = isValidSouthEastMovement(distance, MAX_NORMAL_MOVE, capture) || isValidSouthWestMovement(distance, MAX_NORMAL_MOVE, capture);
+        } else if(team.getColor() == Color.WHITE) {
+            isValid = isValidNorthEastMovement(distance, MAX_NORMAL_MOVE, capture) || isValidNorthWestMovement(distance, MAX_NORMAL_MOVE, capture);
+        }
+        return isValid;
+
+        /**
 		boolean isValid = false;
 		if ((capture.getInitialLocation().getIntX() + MAX_NORMAL_MOVE == capture
 				.getEndLocation().getIntX() || capture.getInitialLocation()
@@ -78,6 +111,7 @@ public class Pawn extends Piece {
 			isValid = true;
 		}
 		return isValid;
+        */
 	}
 	
 	public void pawnHasMoved() {

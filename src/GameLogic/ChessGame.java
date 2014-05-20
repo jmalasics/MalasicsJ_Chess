@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import Board.ChessBoard;
-import GUI.ConsoleGUI;
+import UI.Console;
 import IO.FileIO;
 import Piece.Piece;
 import PieceManipulation.ChessAction;
+import PieceManipulation.InvalidAction;
 import PieceManipulation.Placement;
+import UI.UI;
 
 
 public class ChessGame {
@@ -18,8 +20,10 @@ public class ChessGame {
 		boolean running = true;
 		while(running) {
 			try {
-				ChessGame game = new ChessGame(new FileIO("TestChess"));
+				ChessGame game = new ChessGame(new FileIO("Chess.txt"));
 				game.setUp();
+
+                //Is beyond Module 2
 				Scanner scanner = new Scanner(System.in);
 				System.out.println("Please enter the path of the file you wish to use.");
 				game.setFileIo(scanner.nextLine());
@@ -32,7 +36,7 @@ public class ChessGame {
 	}
 	
 	private FileIO fileIo;
-	private ConsoleGUI gui;
+	private UI ui;
 	private ChessBoard board;
 	private Team whiteTeam;
 	private Team blackTeam;
@@ -40,7 +44,7 @@ public class ChessGame {
 	
 	public ChessGame(FileIO io) {
 		fileIo = io;
-		gui = new ConsoleGUI();
+		ui = new Console();
 		board = new ChessBoard();
 		whiteTeam = new Team(Color.WHITE);
 		blackTeam = new Team(Color.BLACK);
@@ -65,7 +69,7 @@ public class ChessGame {
 				System.err.println("IO error");
 			}
 		}
-		gui.displayBoard(board);
+		ui.displayBoard(board);
 	}
 	
 	/**
@@ -82,17 +86,18 @@ public class ChessGame {
 				if(action == null) {
 					running = false;
 				} else {
-					Team currentTeam = isWhiteTurn ? whiteTeam : blackTeam;
-					Team otherTeam = isWhiteTurn ? blackTeam : whiteTeam;
-                    listMovablePieces(currentTeam);
-					if(currentTeam.performAction(action, board, otherTeam)) {
-						if(otherTeam.isInCheck(board, currentTeam.getMoves())) {
-							otherTeam.printCheckMessage();
-						}
-						isWhiteTurn = !isWhiteTurn;
-						gui.displayBoard(board);
-					}
-				}
+                    if(!(action instanceof InvalidAction)) {
+					    Team currentTeam = isWhiteTurn ? whiteTeam : blackTeam;
+					    Team otherTeam = isWhiteTurn ? blackTeam : whiteTeam;
+					    if(currentTeam.performAction(action, board, otherTeam)) {
+						    if(otherTeam.isInCheck(board, currentTeam.getMoves())) {
+							    otherTeam.printCheckMessage();
+						    }
+						    isWhiteTurn = !isWhiteTurn;
+						    ui.displayBoard(board);
+					    }
+				    }
+                }
 			} catch (IOException e) {
 				System.err.println("IO error.");
 			}
@@ -101,33 +106,6 @@ public class ChessGame {
 	
 	public void setFileIo(String file) throws FileNotFoundException {
 		fileIo = new FileIO(file);
-	}
-	
-	private void listMovablePieces(Team team) {
-		System.out.println("Choose a piece to move: ");
-		int count = 1;
-		for(Piece piece : team.getPieces()) {
-			if(piece.getMoves().size() > 0) {
-				System.out.println(" " + count + ": " + piece.getPieceName() + " at " + board.getPieceLocation(piece).toString());
-			}
-		}
-	}
-	
-	private Piece getMovablePiece(String input) {
-
-		return null;
-	}
-	
-	private void listPieceMoves(Piece piece) {
-		System.out.println("Where do you wish to move? ");
-		int count = 1;
-		for(ChessAction action : piece.getMoves()) {
-			System.out.println(" " + count + ": " + action.getEndLocation());
-		}
-	}
-	
-	private ChessAction getAction(String input) {
-		return null;
 	}
 	
 }
