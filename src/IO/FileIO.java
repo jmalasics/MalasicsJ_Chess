@@ -1,13 +1,8 @@
 package IO;
-import java.awt.Color;
 import java.io.*;
-import java.util.HashMap;
-import java.util.regex.*;
-
-import GameLogic.Team;
 import Parser.*;
-import Piece.*;
 import PieceManipulation.*;
+import UI.*;
 
 
 public class FileIO {
@@ -16,23 +11,25 @@ public class FileIO {
 	private FileReader reader;
 	private BufferedReader textReader;
     private Parsable[] parsables;
+    private UI ui;
 
     private static final int NUM_PARSABLES = 5;
 	
-	public FileIO(String file) throws FileNotFoundException {
+	public FileIO(String file, UI ui) throws FileNotFoundException {
 		filePath = file;
 		reader = new FileReader(filePath);
 		textReader = new BufferedReader(reader);
+        this.ui = ui;
         createParserArray();
 	}
 
     private void createParserArray() {
         parsables = new Parsable[NUM_PARSABLES];
-        parsables[0] = new PlaceParser();
-        parsables[1] = new CaptureParser();
-        parsables[2] = new MultimoveParser();
-        parsables[3] = new MoveParser();
-        parsables[4] = new InvalidActionParser();
+        parsables[0] = new PlaceParser(ui);
+        parsables[1] = new CaptureParser(ui);
+        parsables[2] = new MultimoveParser(ui);
+        parsables[3] = new MoveParser(ui);
+        parsables[4] = new InvalidActionParser(ui);
     }
 	
 	/**
@@ -54,7 +51,6 @@ public class FileIO {
                 index++;
             }
 		}
-		System.out.flush();
 		return action;
     }
 	

@@ -2,6 +2,7 @@ package PieceManipulation;
 
 import Board.ChessBoard;
 import Piece.Piece;
+import Exception.PlacementException;
 
 /**
  * Stores all the information needed for placing a piece on the board.
@@ -36,7 +37,7 @@ public class Placement extends ChessAction {
 		return initialLocation;
 	}
 	
-	public boolean executeAction(ChessBoard board) {
+	public boolean executeAction(ChessBoard board) throws PlacementException {
 		return board.placePiece(this);
 	}
 

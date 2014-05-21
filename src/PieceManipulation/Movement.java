@@ -1,6 +1,7 @@
 package PieceManipulation;
 
 import Board.ChessBoard;
+import Exception.MovementException;
 
 
 /**
@@ -33,7 +34,7 @@ public class Movement extends ChessAction {
 		return endLocation;
 	}
 	
-	public boolean executeAction(ChessBoard board) {
+	public boolean executeAction(ChessBoard board) throws MovementException {
 		return board.move(this);
 	}
 	

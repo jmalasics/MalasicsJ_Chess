@@ -6,8 +6,6 @@ import PieceManipulation.*;
 
 public class King extends Piece {
 	
-	private static final int MAX_MOVE_DISTANCE = 1;
-	
 	public King(Team team) {
 		super(team);
 	}
@@ -18,9 +16,9 @@ public class King extends Piece {
         if(distance == 0) {
             distance = Math.abs(move.getInitialLocation().getArrayY() - move.getEndLocation().getArrayY());
         }
-        return distance == 1 && (isValidNorthMovement(distance, MAX_MOVE_DISTANCE, move) || isValidNorthEastMovement(distance, MAX_MOVE_DISTANCE, move) || isValidEastMovement(distance, MAX_MOVE_DISTANCE, move)
-                || isValidSouthEastMovement(distance, MAX_MOVE_DISTANCE, move) || isValidSouthMovement(distance, MAX_MOVE_DISTANCE, move) || isValidSouthWestMovement(distance, MAX_MOVE_DISTANCE, move)
-                || isValidWestMovement(distance, MAX_MOVE_DISTANCE, move) || isValidNorthWestMovement(distance, MAX_MOVE_DISTANCE, move));
+        return distance == 1 && (isValidNorthMovement(distance, move) || isValidNorthEastMovement(distance, move) || isValidEastMovement(distance, move)
+                || isValidSouthEastMovement(distance, move) || isValidSouthMovement(distance, move) || isValidSouthWestMovement(distance, move)
+                || isValidWestMovement(distance, move) || isValidNorthWestMovement(distance, move));
 
         /**
 		boolean isValid = false;

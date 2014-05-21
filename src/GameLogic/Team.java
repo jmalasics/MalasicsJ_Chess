@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import Piece.*;
 import PieceManipulation.*;
 import Board.*;
+import Exception.*;
+import UI.*;
 
 public class Team {
 
 	private Color teamColor;
 	private ArrayList<Piece> pieces;
+    private UI ui;
 	
 	private Location kingLocation;
 	
@@ -18,6 +21,10 @@ public class Team {
 		teamColor = color;
 		pieces = new ArrayList<Piece>();
 	}
+
+    public void setUI(UI ui) {
+        this.ui = ui;
+    }
 	
 	public Color getColor() {
 		return teamColor;
@@ -34,24 +41,22 @@ public class Team {
 		pieces.remove(piece);
 	}
 	
-	public boolean performAction(ChessAction action, ChessBoard board, Team otherTeam) {
+	public boolean performAction(ChessAction action, ChessBoard board, Team otherTeam) throws Exception {
 		boolean actionCompleted = false;
-        if(!isInCheckmate(board, otherTeam)) {
+        //if(!isInCheckmate(board, otherTeam)) {
 		    findAllAvailableMoves(board, otherTeam);
 		    if(isTeamPiece(action.getInitialLocation(), board)) {
 		        if(containsMove(action, board.getPieceAt(action.getInitialLocation()))) {
-			        board.movePiece(action.getInitialLocation(), action.getEndLocation());
-			        actionCompleted = true;
+			        actionCompleted = action.executeAction(board);
 			        getKingLocation(board);
 		        }
 		    } else {
-			    System.err.println("Cannot move a piece that isn't yours.");
-			    System.err.flush();
+                throw new NotTeamPieceException("Cannot move a piece that isn't yours.");
 		    }
 		    findAllAvailableMoves(board, otherTeam);
-        } else {
-            printCheckmateMessage();
-        }
+        //} else {
+         //   displayCheckmateMessage();
+        //}
 		return actionCompleted;
 	}
 	
@@ -82,7 +87,11 @@ public class Team {
         otherTeam.findAllAvailableMoves(board, this);
         isMovingIntoCheck = isInCheck(board, otherTeam.getMoves());
         board.movePiece(action.getEndLocation(), action.getInitialLocation());
-        board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
+        try {
+            board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
+        } catch(PlacementException placementException) {
+
+        }
         otherTeam.findAllAvailableMoves(board, this);
         return isMovingIntoCheck;
 	}
@@ -94,7 +103,7 @@ public class Team {
 			if(!(piece instanceof Knight)) {
 				removeBlockedActions(board, piece);
 			}
-			removeIntoCheckMoves(piece, board, otherTeam);
+			//removeIntoCheckMoves(piece, board, otherTeam);
 		}
 	}
 	
@@ -148,14 +157,14 @@ public class Team {
         return isInCheck(board, otherTeam.getMoves()) && otherTeam.getMoves().size() == 0;
     }
 	
-	public void printCheckMessage() {
+	public void displayCheckMessage() {
 		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
-		System.out.println("The " + teamColorString +"'s king is in check.");
+        ui.displayMessage("The " + teamColorString +"'s king is in check.");
 	}
 	
-	public void printCheckmateMessage() {
+	public void displayCheckmateMessage() {
 		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
-		System.out.println(teamColorString + " has been checkmated.");
+        ui.displayMessage(teamColorString + " has been checkmated.");
 	}
 	
 	private void getKingLocation(ChessBoard board) {

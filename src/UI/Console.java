@@ -24,6 +24,27 @@ public class Console implements UI {
 		}
 		System.out.flush();
 	}
+
+    @Override
+    public void displayExceptionMessage(Exception exception) {
+        System.err.println(exception.getMessage());
+        System.err.flush();
+        System.out.flush();
+    }
+
+    @Override
+    public void displayMessage(String string) {
+        System.out.println(string);
+        System.out.flush();
+        System.err.flush();
+    }
+
+    @Override
+    public void displayLogMessage(String string) {
+        System.out.println(string);
+        System.out.flush();
+        System.err.flush();
+    }
 	
 }
 

@@ -7,7 +7,6 @@ import java.util.Scanner;
 import Board.ChessBoard;
 import UI.Console;
 import IO.FileIO;
-import Piece.Piece;
 import PieceManipulation.ChessAction;
 import PieceManipulation.InvalidAction;
 import PieceManipulation.Placement;
@@ -20,10 +19,8 @@ public class ChessGame {
 		boolean running = true;
 		while(running) {
 			try {
-				ChessGame game = new ChessGame(new FileIO("Chess.txt"));
+				ChessGame game = new ChessGame("Chess.txt");
 				game.setUp();
-
-                //Is beyond Module 2
 				Scanner scanner = new Scanner(System.in);
 				System.out.println("Please enter the path of the file you wish to use.");
 				game.setFileIo(scanner.nextLine());
@@ -42,12 +39,14 @@ public class ChessGame {
 	private Team blackTeam;
 	private boolean isWhiteTurn = true;
 	
-	public ChessGame(FileIO io) {
-		fileIo = io;
-		ui = new Console();
+	public ChessGame(String path) throws FileNotFoundException {
+        ui = new Console();
+		fileIo = new FileIO(path, ui);
 		board = new ChessBoard();
 		whiteTeam = new Team(Color.WHITE);
+        whiteTeam.setUI(ui);
 		blackTeam = new Team(Color.BLACK);
+        blackTeam.setUI(ui);
 	}
 	
 	public void setUp() {
@@ -66,8 +65,10 @@ public class ChessGame {
 					System.err.flush();
 				}
 			} catch(IOException e) {
-				System.err.println("IO error");
-			}
+                ui.displayExceptionMessage(new IOException("IO error"));
+			} catch(Exception exception) {
+                ui.displayExceptionMessage(exception);
+            }
 		}
 		ui.displayBoard(board);
 	}
@@ -87,25 +88,35 @@ public class ChessGame {
 					running = false;
 				} else {
                     if(!(action instanceof InvalidAction)) {
+                        action.executeAction(board);
+                        ui.displayBoard(board);
+                    }
+
+                    /**
+                    if(!(action instanceof InvalidAction)) {
 					    Team currentTeam = isWhiteTurn ? whiteTeam : blackTeam;
 					    Team otherTeam = isWhiteTurn ? blackTeam : whiteTeam;
 					    if(currentTeam.performAction(action, board, otherTeam)) {
 						    if(otherTeam.isInCheck(board, currentTeam.getMoves())) {
-							    otherTeam.printCheckMessage();
+							    otherTeam.displayCheckMessage();
 						    }
 						    isWhiteTurn = !isWhiteTurn;
 						    ui.displayBoard(board);
 					    }
 				    }
+                    */
                 }
-			} catch (IOException e) {
-				System.err.println("IO error.");
-			}
+			} catch(IOException e) {
+                ui.displayExceptionMessage(new IOException("IO error"));
+            } catch (Exception exception) {
+                ui.displayExceptionMessage(exception);
+                ui.displayBoard(board);
+            }
 		}
 	}
 	
 	public void setFileIo(String file) throws FileNotFoundException {
-		fileIo = new FileIO(file);
+		fileIo = new FileIO(file, ui);
 	}
 	
 }

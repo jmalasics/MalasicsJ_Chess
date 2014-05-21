@@ -5,6 +5,7 @@ import java.awt.Color;
 import Piece.Piece;
 import Piece.Pawn;
 import PieceManipulation.*;
+import Exception.*;
 
 public class ChessBoard {
 	
@@ -49,13 +50,13 @@ public class ChessBoard {
 	 * @param place
 	 * @return
 	 */
-	public boolean placePiece(Placement place) {
+	public boolean placePiece(Placement place) throws PlacementException {
 		boolean actionCompleted = false;
 		if(!isPieceAt(place.getLocation())) {
 			getSquareAt(place.getLocation()).setPiece(place.getPiece());
 			actionCompleted = true;
 		} else {
-			System.err.println("There is already a piece in that location.");
+            throw new PlacementException("There is already a piece in that location.");
 		}
 		return actionCompleted;
 	}
@@ -77,19 +78,19 @@ public class ChessBoard {
 	 * @param move
 	 * @return
 	 */
-	public boolean move(Movement move) {
+	public boolean move(Movement move) throws MovementException {
 		boolean actionCompleted = false;
 		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
 			if(getPieceAt(move.getInitialLocation()).isValidMove(move)) {
 				movePiece(move.getInitialLocation(), move.getEndLocation());
 				actionCompleted = true;
 			} else {
-				System.err.println("Invalid move for that piece.");
+                throw new MovementException("Invalid move for that piece.");
 			}
 		} else if(isPieceAt(move.getEndLocation())) {
-			System.err.println("There is a piece in the location you are trying to move to.");
+            throw new MovementException("There is a piece in the location you are trying to move to.");
 		} else if(!isPieceAt(move.getInitialLocation())) {
-			System.err.println("There is no piece at that location.");
+            throw new MovementException("There is no piece at that location.");
 		}
 		return actionCompleted;
 	}
@@ -113,7 +114,7 @@ public class ChessBoard {
 	 * @param capture
 	 * @return
 	 */
-	public boolean capture(Capture capture) {
+	public boolean capture(Capture capture) throws CaptureException {
 		boolean actionCompleted = false;
 		if(isPieceAt(capture.getEndLocation()) && isPieceAt(capture.getInitialLocation())) {
 			if(!getPieceAt(capture.getInitialLocation()).getColor().equals(getPieceAt(capture.getEndLocation()).getColor())) {
@@ -121,19 +122,20 @@ public class ChessBoard {
 					movePiece(capture.getInitialLocation(), capture.getEndLocation());
 					actionCompleted = true;
 				} else {
-					System.err.println("Invalid capture for that piece.");
+                    throw new CaptureException("Invalid capture for that piece.");
 				}
 			} else {
-				System.err.println("Cannot capture your own piece.");
+                throw new CaptureException("Cannot capture your own piece.");
 			}
 		} else if(!isPieceAt(capture.getEndLocation())) {
-			System.err.println("There is no piece to capture at that location.");
+            throw new CaptureException("There is no piece to capture at that location.");
 		} else if(!isPieceAt(capture.getInitialLocation())) {
-			System.err.println("There is no piece to capture with.");
+            throw new CaptureException("There is no piece to capture with.");
 		}
 		return actionCompleted;
 	}
-	
+
+    //TODO Make private
 	public void movePiece(Location initial, Location end) {
 		if(getPieceAt(initial) instanceof Pawn) {
 			((Pawn) getPieceAt(initial)).pawnHasMoved();
@@ -149,12 +151,16 @@ public class ChessBoard {
 	 * @param multimove
 	 * @return
 	 */
-	public boolean castle(Multimovement multimove) {
+	public boolean castle(Multimovement multimove) throws CastlingException {
 		boolean actionCompleted = false;
 		if(isPieceAt(multimove.getKingInitialLocation()) && isPieceAt(multimove.getRookInitialLocation())) {
 			if(!isPieceAt(multimove.getKingEndLocation()) && !isPieceAt(multimove.getRookEndLocation())) {
-				actionCompleted = move(new Movement(multimove.getKingInitialLocation(), multimove.getKingEndLocation()));
-				actionCompleted = move(new Movement(multimove.getRookInitialLocation(), multimove.getRookEndLocation()));
+                try {
+				    actionCompleted = move(new Movement(multimove.getKingInitialLocation(), multimove.getKingEndLocation()));
+				    actionCompleted = move(new Movement(multimove.getRookInitialLocation(), multimove.getRookEndLocation()));
+                } catch(MovementException movementException) {
+                    throw new CastlingException(movementException.getMessage());
+                }
 			} else if(isPieceAt(multimove.getKingEndLocation()) || isPieceAt(multimove.getRookEndLocation())) {
 				System.err.println("There is a piece blocking the castle.");
 			}
@@ -182,7 +188,7 @@ public class ChessBoard {
 	 * @return
 	 */
 	private Square getSquareAt(Location location) {
-		return board[location.getArrayY()][location.getIntX()];
+        return board[location.getArrayY()][location.getIntX()];
 	}
 	
 	/**

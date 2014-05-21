@@ -12,4 +12,19 @@ public class GUI implements UI {
 
     }
 
+    @Override
+    public void displayExceptionMessage(Exception exception) {
+
+    }
+
+    @Override
+    public void displayMessage(String string) {
+
+    }
+
+    @Override
+    public void displayLogMessage(String string) {
+
+    }
+
 }

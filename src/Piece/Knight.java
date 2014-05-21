@@ -22,28 +22,28 @@ public class Knight extends Piece {
 		return move.getInitialLocation().getY() + INITIAL_MOVE == move
 				.getEndLocation().getY() && (move.getInitialLocation().getIntX() + SECOND_MOVE == move
 				.getEndLocation().getIntX() || move.getInitialLocation().getIntX()
-				- SECOND_MOVE == move.getEndLocation().getIntX()) ? true : false;
+				- SECOND_MOVE == move.getEndLocation().getIntX());
 	}
 	
 	private boolean checkDownMove(Movement move) {
 		return move.getInitialLocation().getY() - INITIAL_MOVE == move
 				.getEndLocation().getY() && (move.getInitialLocation().getIntX() + SECOND_MOVE == move
 					.getEndLocation().getIntX() || move.getInitialLocation().getIntX()
-					- SECOND_MOVE == move.getEndLocation().getIntX()) ? true : false;
+					- SECOND_MOVE == move.getEndLocation().getIntX());
 	}
 	
 	private boolean checkRightMove(Movement move) {
 		return move.getInitialLocation().getIntX() + INITIAL_MOVE == move
 				.getEndLocation().getIntX() && (move.getInitialLocation().getY() + SECOND_MOVE == move
-				.getEndLocation().getY() || move.getInitialLocation().getY() - INITIAL_MOVE == move
-				.getEndLocation().getY()) ? true : false;
+				.getEndLocation().getY() || move.getInitialLocation().getY() - SECOND_MOVE == move
+				.getEndLocation().getY());
 	}
 	
 	private boolean checkLeftMove(Movement move) {
 		return move.getInitialLocation().getIntX() - INITIAL_MOVE == move
 				.getEndLocation().getIntX() && (move.getInitialLocation().getY() + SECOND_MOVE == move
 					.getEndLocation().getY() || move.getInitialLocation().getY() + SECOND_MOVE == move
-					.getEndLocation().getY()) ? true : false;
+					.getEndLocation().getY());
 	}
 	
 	@Override

@@ -6,6 +6,7 @@ import PieceManipulation.Multimovement;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import UI.*;
 
 /**
  * Created by jmalasics on 5/13/14.
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 public class MultimoveParser implements Parsable {
 
     private Pattern multimovePattern;
+    private UI ui;
 
     public static final int KING_X_COORD_FIRST = 0;
     public static final int KING_Y_COORD_FIRST = 1;
@@ -23,7 +25,8 @@ public class MultimoveParser implements Parsable {
     public static final int ROOK_X_SECOND = 9;
     public static final int ROOK_Y_SECOND = 10;
 
-    public MultimoveParser() {
+    public MultimoveParser(UI ui) {
+        this.ui = ui;
         multimovePattern = Pattern
                 .compile("(([a-h][1-8])\\s([a-h][1-8]))\\s(([a-h][1-8])\\s([a-h][1-8]))");
     }
@@ -57,7 +60,7 @@ public class MultimoveParser implements Parsable {
     @Override
     public void printAction(ChessAction action) {
         Multimovement multimovement = (Multimovement) action;
-        System.out.println("The king at " + multimovement.getKingInitialLocation().toString() + " moves to "
+        ui.displayLogMessage("The king at " + multimovement.getKingInitialLocation().toString() + " moves to "
                 + multimovement.getKingEndLocation().toString() + " and the rook at "
                 + multimovement.getRookInitialLocation().toString() + " moves to "
                 + multimovement.getRookEndLocation().toString() + ".");

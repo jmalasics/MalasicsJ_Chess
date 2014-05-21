@@ -6,8 +6,6 @@ import PieceManipulation.*;
 
 public class Bishop extends Piece {
 
-    private static final int MAX_MOVE_DISTANCE = 8;
-
 	public Bishop(Team team) {
 		super(team);
 	}
@@ -15,8 +13,8 @@ public class Bishop extends Piece {
 	@Override
 	public boolean isValidMove(Movement move) {
         int distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
-        return distance > 0 && (isValidNorthEastMovement(distance, MAX_MOVE_DISTANCE, move) || isValidNorthWestMovement(distance, MAX_MOVE_DISTANCE, move) || isValidSouthEastMovement(distance, MAX_MOVE_DISTANCE, move)
-                || isValidSouthWestMovement(distance, MAX_MOVE_DISTANCE, move));
+        return distance > 0 && (isValidNorthEastMovement(distance, move) || isValidNorthWestMovement(distance, move) || isValidSouthEastMovement(distance, move)
+                || isValidSouthWestMovement(distance, move));
 
         /**
         boolean isValid = false;

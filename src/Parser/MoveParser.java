@@ -6,6 +6,7 @@ import PieceManipulation.Movement;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import UI.*;
 
 /**
  * Created by jmalasics on 5/13/14.
@@ -13,13 +14,15 @@ import java.util.regex.Pattern;
 public class MoveParser implements Parsable {
 
     private Pattern movePattern;
+    private UI ui;
 
     public static final int FIRST_X_COORD = 0;
     public static final int FIRST_Y_COORD = 1;
     public static final int SECOND_X_COORD = 3;
     public static final int SECOND_Y_COORD = 4;
 
-    public MoveParser() {
+    public MoveParser(UI ui) {
+        this.ui = ui;
         movePattern = Pattern
                 .compile("(([a-h][1-8])\\s([a-h][1-8]))");
     }
@@ -47,7 +50,7 @@ public class MoveParser implements Parsable {
     @Override
     public void printAction(ChessAction action) {
         Movement move = (Movement) action;
-        System.out.println("The piece at " + move.getInitialLocation().toString() + " moves to " + move.getEndLocation().toString() + ".");
+        ui.displayLogMessage("The piece at " + move.getInitialLocation().toString() + " moves to " + move.getEndLocation().toString() + ".");
     }
 
 }

@@ -35,7 +35,7 @@ public abstract class ChessAction {
 		return endLocation;
 	}
 	
-	public boolean executeAction(ChessBoard board) {
+	public boolean executeAction(ChessBoard board) throws Exception {
 		return false;
 	}
 	

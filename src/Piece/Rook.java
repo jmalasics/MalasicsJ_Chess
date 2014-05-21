@@ -5,8 +5,6 @@ import PieceManipulation.*;
 
 
 public class Rook extends Piece {
-
-    private static final int MAX_MOVE_DISTANCE = 8;
 	
 	public Rook(Team team) {
 		super(team);
@@ -18,8 +16,8 @@ public class Rook extends Piece {
         if(distance == 0) {
             distance = Math.abs(move.getInitialLocation().getArrayY() - move.getEndLocation().getArrayY());
         }
-        return distance > 0 && (isValidNorthMovement(distance, MAX_MOVE_DISTANCE, move) || isValidEastMovement(distance, MAX_MOVE_DISTANCE, move) || isValidSouthMovement(distance, MAX_MOVE_DISTANCE, move)
-                || isValidWestMovement(distance, MAX_MOVE_DISTANCE, move));
+        return distance > 0 && (isValidNorthMovement(distance, move) || isValidEastMovement(distance, move) || isValidSouthMovement(distance, move)
+                || isValidWestMovement(distance, move));
 
         /**
 		boolean isValid = false;

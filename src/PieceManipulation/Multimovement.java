@@ -1,6 +1,7 @@
 package PieceManipulation;
 
 import Board.ChessBoard;
+import Exception.CastlingException;
 
 
 /**
@@ -56,7 +57,7 @@ public class Multimovement extends ChessAction {
 		return secondaryEndLocation;
 	}
 	
-	public boolean executeAction(ChessBoard board) {
+	public boolean executeAction(ChessBoard board) throws CastlingException {
 		return board.castle(this);
 	}
 

@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import UI.*;
 
 /**
  * Created by jmalasics on 5/13/14.
@@ -18,18 +19,20 @@ public class PlaceParser implements Parsable {
 
     private Pattern placePattern;
     private HashMap<Character, PieceFactory> pieceFactories;
+    private UI ui;
 
     public static final int PIECE_TYPE = 0;
     public static final int PIECE_COLOR = 1;
     public static final int PLACEMENT_X_COORD = 2;
     public static final int PLACEMENT_Y_COORD = 3;
 
-    public PlaceParser() {
+    public PlaceParser(UI ui) {
+        this.ui = ui;
         placePattern = Pattern.compile("([bknpqr])([dl])([a-h][1-8])");
-        createPieceTypes();
+        createPieceFactories();
     }
 
-    private void createPieceTypes() {
+    private void createPieceFactories() {
         pieceFactories = new HashMap<Character, PieceFactory>();
         pieceFactories.put('p', new PawnFactory());
         pieceFactories.put('r', new RookFactory());
@@ -62,7 +65,7 @@ public class PlaceParser implements Parsable {
     @Override
     public void printAction(ChessAction action) {
         Placement placement = (Placement) action;
-        System.out.println("A " + printPieceColor(placement.getPiece()) + " " + placement.getPiece().getPieceName() + " is placed at " + placement.getLocation().toString() + ".");
+        ui.displayLogMessage("A " + printPieceColor(placement.getPiece()) + " " + placement.getPiece().getPieceName() + " is placed at " + placement.getLocation().toString() + ".");
     }
 
     private String printPieceColor(Piece piece) {

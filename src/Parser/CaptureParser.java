@@ -6,20 +6,23 @@ import PieceManipulation.Location;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import UI.*;
 
 /**
  * Created by jmalasics on 5/13/14.
  */
 public class CaptureParser implements Parsable {
 
-    Pattern capturePattern;
+    private Pattern capturePattern;
+    private UI ui;
 
     public static final int FIRST_X_COORD = 0;
     public static final int FIRST_Y_COORD = 1;
     public static final int SECOND_X_COORD = 3;
     public static final int SECOND_Y_COORD = 4;
 
-    public CaptureParser() {
+    public CaptureParser(UI ui) {
+        this.ui = ui;
         capturePattern = Pattern
                 .compile("([a-h][1-8])\\s([a-h][1-8])([*])");
     }
@@ -47,7 +50,7 @@ public class CaptureParser implements Parsable {
     @Override
     public void printAction(ChessAction action) {
         Capture capture = (Capture) action;
-        System.out.println("The piece at " + capture.getInitialLocation() + " captures the piece at " + capture.getEndLocation() + ".");
+        ui.displayLogMessage("The piece at " + capture.getInitialLocation() + " captures the piece at " + capture.getEndLocation() + ".");
     }
 
 }

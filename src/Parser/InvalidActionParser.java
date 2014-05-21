@@ -2,6 +2,7 @@ package Parser;
 
 import PieceManipulation.ChessAction;
 import PieceManipulation.InvalidAction;
+import UI.*;
 
 /**
  * Created by jmalasics on 5/13/14.
@@ -9,6 +10,11 @@ import PieceManipulation.InvalidAction;
 public class InvalidActionParser implements Parsable {
 
     private String input;
+    private UI ui;
+
+    public InvalidActionParser(UI ui) {
+        this.ui = ui;
+    }
 
     @Override
     public ChessAction parse(String input) {
@@ -23,7 +29,7 @@ public class InvalidActionParser implements Parsable {
 
     @Override
     public void printAction(ChessAction action) {
-        System.err.println("Invalid action input: " + input);
+        ui.displayLogMessage("Invalid action input: " + input);
     }
 
 }

@@ -1,6 +1,7 @@
 package PieceManipulation;
 
 import Board.ChessBoard;
+import Exception.CaptureException;
 
 /**
  * Stores the information needed for capturing pieces.
@@ -32,7 +33,7 @@ public class Capture extends ChessAction {
 		return endLocation;
 	}
 	
-	public boolean executeAction(ChessBoard board) {
+	public boolean executeAction(ChessBoard board) throws CaptureException {
 		return board.capture(this);
 	}
 

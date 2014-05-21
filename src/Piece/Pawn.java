@@ -24,10 +24,11 @@ public class Pawn extends Piece {
         boolean isValid = false;
         if(!hasMoved) {
             isValid = isValidInitialMove(move, distance);
-        } else if(team.getColor() == Color.BLACK) {
-            isValid = isValidSouthMovement(distance, MAX_NORMAL_MOVE, move);
-        } else if(team.getColor() == Color.WHITE) {
-            isValid = isValidNorthMovement(distance, MAX_NORMAL_MOVE, move);
+        } else if(distance == MAX_NORMAL_MOVE) {
+            if(team.getColor() == Color.BLACK) {
+                isValid = isValidSouthMovement(distance, move);
+            } else if(team.getColor() == Color.WHITE)
+                isValid = isValidNorthMovement(distance, move);
         }
         return isValid;
 
@@ -52,10 +53,12 @@ public class Pawn extends Piece {
 	
 	private boolean isValidInitialMove(Movement move, int distance) {
         boolean isValid = false;
-        if(team.getColor() == Color.BLACK) {
-            isValid = isValidSouthMovement(distance, MAX_INITIAL_MOVE, move);
-        } else if(team.getColor() == Color.WHITE) {
-            isValid = isValidNorthMovement(distance, MAX_INITIAL_MOVE, move);
+        if(distance <= MAX_INITIAL_MOVE) {
+            if(team.getColor() == Color.BLACK) {
+                isValid = isValidSouthMovement(distance, move);
+            } else if(team.getColor() == Color.WHITE) {
+                isValid = isValidNorthMovement(distance, move);
+            }
         }
         return isValid;
 
@@ -86,10 +89,12 @@ public class Pawn extends Piece {
 	public boolean isValidCapture(Capture capture) {
         int distance = Math.abs(capture.getInitialLocation().getArrayY() - capture.getEndLocation().getArrayY());
         boolean isValid = false;
-        if(team.getColor() == Color.BLACK) {
-            isValid = isValidSouthEastMovement(distance, MAX_NORMAL_MOVE, capture) || isValidSouthWestMovement(distance, MAX_NORMAL_MOVE, capture);
-        } else if(team.getColor() == Color.WHITE) {
-            isValid = isValidNorthEastMovement(distance, MAX_NORMAL_MOVE, capture) || isValidNorthWestMovement(distance, MAX_NORMAL_MOVE, capture);
+        if(distance == MAX_NORMAL_MOVE) {
+            if(team.getColor() == Color.BLACK) {
+                isValid = isValidSouthEastMovement(distance, capture) || isValidSouthWestMovement(distance, capture);
+            } else if(team.getColor() == Color.WHITE) {
+                isValid = isValidNorthEastMovement(distance, capture) || isValidNorthWestMovement(distance, capture);
+            }
         }
         return isValid;
 
