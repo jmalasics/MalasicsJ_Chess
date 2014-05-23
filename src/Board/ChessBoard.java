@@ -36,9 +36,9 @@ public class ChessBoard {
 	 * Determines what the color will be for the squares that are added to the board, based off of where the square is 
 	 * located in the array.
 	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * @param x the x location of a square
+	 * @param y the y location of a square
+	 * @return the color that the square
 	 */
 	private Color getColor(int x, int y) {
 		return (x + y) % 2 == 0 ? Color.WHITE : Color.GRAY;
@@ -47,8 +47,8 @@ public class ChessBoard {
 	/**
 	 * Places a piece on the board at a location if that location is unoccupied. If it is occupied it displays an error message.
 	 * 
-	 * @param place
-	 * @return
+	 * @param place the placement action you wish to perform
+	 * @return a boolean representing if the placement was successful or not
 	 */
 	public boolean placePiece(Placement place) throws PlacementException {
 		boolean actionCompleted = false;
@@ -60,82 +60,79 @@ public class ChessBoard {
 		}
 		return actionCompleted;
 	}
-	
+
+    /**
+     * Validates if the movement is valid or not.
+     *
+     * @param move the movement you are trying to perform
+     * @return a boolean representing if the movement is valid or not
+     */
 	public boolean canMove(Movement move) {
-		boolean actionCompleted = false;
+		boolean isValidMove = false;
 		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
 			if(getPieceAt(move.getInitialLocation()).isValidMove(move)) {
-				actionCompleted = true;
+				isValidMove = true;
 			}
 		}
-		return actionCompleted;
+		return isValidMove;
 	}
 	
 	/**
 	 * Moves a piece on the board if no piece is on the square it is moving to and there is a piece on the starting location for 
 	 * the move. If not an error message displaying what the problem is with the move.
 	 * 
-	 * @param move
-	 * @return
+	 * @param move the movement you are trying to perform
+	 * @return a boolean representing if the movement was completed or not
 	 */
 	public boolean move(Movement move) throws MovementException {
 		boolean actionCompleted = false;
-		if(!isPieceAt(move.getEndLocation()) && isPieceAt(move.getInitialLocation())) {
-			if(getPieceAt(move.getInitialLocation()).isValidMove(move)) {
-				movePiece(move.getInitialLocation(), move.getEndLocation());
-				actionCompleted = true;
-			} else {
-                throw new MovementException("Invalid move for that piece.");
-			}
-		} else if(isPieceAt(move.getEndLocation())) {
-            throw new MovementException("There is a piece in the location you are trying to move to.");
-		} else if(!isPieceAt(move.getInitialLocation())) {
-            throw new MovementException("There is no piece at that location.");
-		}
-		return actionCompleted;
+        if(canMove(move)) {
+            movePiece(move.getInitialLocation(), move.getEndLocation());
+            actionCompleted = true;
+        }
+        return actionCompleted;
 	}
-	
+
+    /**
+     * Validates if the capture is valid or not.
+     *
+     * @param capture the capture you are trying to perform
+     * @return a boolean representing if the capture is valid or not
+     */
 	public boolean canCapture(Capture capture) {
-		boolean actionCompleted = false;
+		boolean isValidCapture = false;
 		if(isPieceAt(capture.getEndLocation()) && isPieceAt(capture.getInitialLocation())) {
-			if(!getPieceAt(capture.getInitialLocation()).getColor().equals(getPieceAt(capture.getEndLocation()).getColor())) {
-				if(getPieceAt(capture.getInitialLocation()).isValidCapture(capture)) {
-					actionCompleted = true;
-				}
+            Piece capturingPiece = getPieceAt(capture.getInitialLocation());
+            Piece capturedPiece = getPieceAt(capture.getEndLocation());
+			if(!capturingPiece.isOnSameTeam(capturedPiece)) {
+                isValidCapture = capturingPiece.isValidCapture(capture);
 			}
 		}
-		return actionCompleted;
+		return isValidCapture;
 	}
 	
 	/**
 	 * Captures a piece on the board if there is a piece on the captured location and if there is a piece to be captured with. If 
 	 * not an error message displaying what the problem is with the capture.
 	 * 
-	 * @param capture
-	 * @return
+	 * @param capture the capture you are trying to perform
+	 * @return a boolean representing if the capture was successful or not
 	 */
 	public boolean capture(Capture capture) throws CaptureException {
 		boolean actionCompleted = false;
-		if(isPieceAt(capture.getEndLocation()) && isPieceAt(capture.getInitialLocation())) {
-			if(!getPieceAt(capture.getInitialLocation()).getColor().equals(getPieceAt(capture.getEndLocation()).getColor())) {
-				if(getPieceAt(capture.getInitialLocation()).isValidCapture(capture)) {
-					movePiece(capture.getInitialLocation(), capture.getEndLocation());
-					actionCompleted = true;
-				} else {
-                    throw new CaptureException("Invalid capture for that piece.");
-				}
-			} else {
-                throw new CaptureException("Cannot capture your own piece.");
-			}
-		} else if(!isPieceAt(capture.getEndLocation())) {
-            throw new CaptureException("There is no piece to capture at that location.");
-		} else if(!isPieceAt(capture.getInitialLocation())) {
-            throw new CaptureException("There is no piece to capture with.");
-		}
-		return actionCompleted;
+        if(canCapture(capture)) {
+            movePiece(capture.getInitialLocation(), capture.getEndLocation());
+            actionCompleted = true;
+        }
+        return actionCompleted;
 	}
 
-    //TODO Make private
+    /**
+     * Moves the piece at the initial location to the end location.
+     *
+     * @param initial the initial location of a move or capture
+     * @param end the end location of a move or capture
+     */
 	public void movePiece(Location initial, Location end) {
 		if(getPieceAt(initial) instanceof Pawn) {
 			((Pawn) getPieceAt(initial)).pawnHasMoved();
@@ -148,8 +145,8 @@ public class ChessBoard {
 	 * Castles if there are pieces on the starting locations and if the squares they are moving to are empty. If not an error 
 	 * message display what the problem is with the castle.
 	 * 
-	 * @param multimove
-	 * @return
+	 * @param multimove the castling action you are trying to perform
+	 * @return a boolean representing if you completed the castling movement or not
 	 */
 	public boolean castle(Multimovement multimove) throws CastlingException {
 		boolean actionCompleted = false;
@@ -157,15 +154,17 @@ public class ChessBoard {
 			if(!isPieceAt(multimove.getKingEndLocation()) && !isPieceAt(multimove.getRookEndLocation())) {
                 try {
 				    actionCompleted = move(new Movement(multimove.getKingInitialLocation(), multimove.getKingEndLocation()));
-				    actionCompleted = move(new Movement(multimove.getRookInitialLocation(), multimove.getRookEndLocation()));
+                    if(actionCompleted) {
+				        actionCompleted = move(new Movement(multimove.getRookInitialLocation(), multimove.getRookEndLocation()));
+                    }
                 } catch(MovementException movementException) {
                     throw new CastlingException(movementException.getMessage());
                 }
 			} else if(isPieceAt(multimove.getKingEndLocation()) || isPieceAt(multimove.getRookEndLocation())) {
-				System.err.println("There is a piece blocking the castle.");
+				throw new CastlingException("There is a piece blocking the castle.");
 			}
 		} else if(!isPieceAt(multimove.getKingInitialLocation()) || !isPieceAt(multimove.getRookInitialLocation())) {
-			System.err.println("There isn't a piece at one of the locations.");
+			throw new CastlingException("There isn't a piece at one of the locations.");
 		}
 		return actionCompleted;
 	}
@@ -173,9 +172,9 @@ public class ChessBoard {
 	/**
 	 * Returns the square at the index of the 2 dimensional array.
 	 * 
-	 * @param i
-	 * @param j
-	 * @return
+	 * @param i the x location of the square you are getting
+	 * @param j the y location of the square you are getting
+	 * @return the square at the i (x) and j (y) location
 	 */
 	public Square getSquareAt(int i, int j) {
 		return board[i][j];
@@ -184,8 +183,8 @@ public class ChessBoard {
 	/**
 	 * Returns the square at the specified location.
 	 * 
-	 * @param location
-	 * @return
+	 * @param location the location of of which you want to get a square
+	 * @return the square at the specified location
 	 */
 	private Square getSquareAt(Location location) {
         return board[location.getArrayY()][location.getIntX()];
@@ -194,8 +193,8 @@ public class ChessBoard {
 	/**
 	 * Returns if there is a piece at the specified location or not.
 	 * 
-	 * @param location
-	 * @return
+	 * @param location the location you are searching for a piece
+	 * @return a boolean representing if there is a square at the specified location or not
 	 */
 	public boolean isPieceAt(Location location) {
 		return getSquareAt(location).getPiece() != null;
@@ -204,8 +203,8 @@ public class ChessBoard {
 	/**
 	 * Returns the piece at the specified location.
 	 * 
-	 * @param location
-	 * @return
+	 * @param location the location you are searching for a piece
+	 * @return the piece at the specified location
 	 */
 	public Piece getPieceAt(Location location) {
 		return getSquareAt(location).getPiece();

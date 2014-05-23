@@ -35,20 +35,21 @@ public class ChessGame {
 	private FileIO fileIo;
 	private UI ui;
 	private ChessBoard board;
-	private Team whiteTeam;
-	private Team blackTeam;
-	private boolean isWhiteTurn = true;
+    private Team currentTeam;
+    private Team otherTeam;
 	
 	public ChessGame(String path) throws FileNotFoundException {
         ui = new Console();
 		fileIo = new FileIO(path, ui);
 		board = new ChessBoard();
-		whiteTeam = new Team(Color.WHITE);
-        whiteTeam.setUI(ui);
-		blackTeam = new Team(Color.BLACK);
-        blackTeam.setUI(ui);
+		currentTeam = new Team(Color.WHITE);
+		otherTeam = new Team(Color.BLACK);
 	}
-	
+
+    /**
+     * Sets up the board before the program prompts the user for the file for the moves.
+     *
+     */
 	public void setUp() {
 		boolean running = true;
 		while(running) {
@@ -58,16 +59,15 @@ public class ChessGame {
 					running = false;
 				} else {
 					if(action.executeAction(board)) {
-						Team team = ((Placement) action).getPiece().getTeam().equals(whiteTeam) ? whiteTeam : blackTeam;
+						Team team = ((Placement) action).getPiece().getTeam().equals(currentTeam) ? currentTeam : otherTeam;
 						team.addPiece(((Placement) action).getPiece(), board);
 					}
-					System.out.flush();
-					System.err.flush();
 				}
 			} catch(IOException e) {
-                ui.displayExceptionMessage(new IOException("IO error"));
+                ui.displayErrorMessage(new IOException("IO error"));
 			} catch(Exception exception) {
-                ui.displayExceptionMessage(exception);
+                ui.displayErrorMessage(exception);
+                ui.displayBoard(board);
             }
 		}
 		ui.displayBoard(board);
@@ -76,47 +76,62 @@ public class ChessGame {
 	/**
 	 * Runs the program and passes the actions from the IO to the board to be performed then displays the new state 
 	 * of the board.
-	 * @throws FileNotFoundException 
 	 * 
 	 */
 	public void run() {
 		boolean running = true;
 		while(running) {
 			try{
+                displayTurnMessage();
 				ChessAction action = fileIo.readLine();
 				if(action == null) {
 					running = false;
 				} else {
                     if(!(action instanceof InvalidAction)) {
-                        action.executeAction(board);
-                        ui.displayBoard(board);
+                        if(currentTeam.performAction(action, board, otherTeam)) {
+                            if(otherTeam.isInCheck(currentTeam.getMoves())) {
+                                ui.displayCheckOrCheckmateMessage(otherTeam.checkMessage());
+                            }
+                            changeTurn();
+                            ui.displayBoard(board);
+                        }
                     }
-
-                    /**
-                    if(!(action instanceof InvalidAction)) {
-					    Team currentTeam = isWhiteTurn ? whiteTeam : blackTeam;
-					    Team otherTeam = isWhiteTurn ? blackTeam : whiteTeam;
-					    if(currentTeam.performAction(action, board, otherTeam)) {
-						    if(otherTeam.isInCheck(board, currentTeam.getMoves())) {
-							    otherTeam.displayCheckMessage();
-						    }
-						    isWhiteTurn = !isWhiteTurn;
-						    ui.displayBoard(board);
-					    }
-				    }
-                    */
                 }
 			} catch(IOException e) {
-                ui.displayExceptionMessage(new IOException("IO error"));
+                ui.displayErrorMessage(new IOException("IO error"));
             } catch (Exception exception) {
-                ui.displayExceptionMessage(exception);
+                ui.displayErrorMessage(exception);
                 ui.displayBoard(board);
             }
 		}
 	}
-	
+
+    /**
+     * Toggles the boolean used to represent who's turn it is.
+     *
+     */
+    public void changeTurn() {
+        Team tempTeam = currentTeam;
+        currentTeam = otherTeam;
+        otherTeam = tempTeam;
+    }
+
+    /**
+     * Takes in a FileIO object and stores it for later use.
+     *
+     * @param file the string path to the file you wish to read
+     * @throws FileNotFoundException
+     */
 	public void setFileIo(String file) throws FileNotFoundException {
 		fileIo = new FileIO(file, ui);
 	}
+
+    /**
+     * Sends a message to the UI displaying who's turn it is.
+     *
+     */
+    private void displayTurnMessage() {
+        ui.displayMessage(currentTeam.toString() + "'s turn:");
+    }
 	
 }

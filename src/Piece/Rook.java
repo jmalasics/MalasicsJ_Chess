@@ -18,23 +18,6 @@ public class Rook extends Piece {
         }
         return distance > 0 && (isValidNorthMovement(distance, move) || isValidEastMovement(distance, move) || isValidSouthMovement(distance, move)
                 || isValidWestMovement(distance, move));
-
-        /**
-		boolean isValid = false;
-		int distance = 0;
-		if(move.getInitialLocation().getIntX() == move.getEndLocation().getIntX()) {
-			distance = Math.abs(move.getInitialLocation().getY() - move.getEndLocation().getY());
-			if(distance > 0) {
-				isValid = true;
-			}
-		} else if(move.getInitialLocation().getY() == move.getEndLocation().getY()) {
-			distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
-			if(distance > 0) {
-				isValid = true;
-			}
-		}
-		return isValid;
-         */
 	}
 	
 	@Override

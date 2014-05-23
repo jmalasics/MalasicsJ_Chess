@@ -19,36 +19,6 @@ public class King extends Piece {
         return distance == 1 && (isValidNorthMovement(distance, move) || isValidNorthEastMovement(distance, move) || isValidEastMovement(distance, move)
                 || isValidSouthEastMovement(distance, move) || isValidSouthMovement(distance, move) || isValidSouthWestMovement(distance, move)
                 || isValidWestMovement(distance, move) || isValidNorthWestMovement(distance, move));
-
-        /**
-		boolean isValid = false;
-		if(move.getInitialLocation().getY() == move.getEndLocation().getY()) {
-			if(move.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(move.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if(move.getInitialLocation().getIntX() == move.getEndLocation().getIntX()) {
-			if(move.getInitialLocation().getY() + MAX_MOVE_DISTANCE == move.getEndLocation().getY()) {
-				isValid = true;
-			} else if(move.getInitialLocation().getY() - MAX_MOVE_DISTANCE == move.getEndLocation().getY()) {
-				isValid = true;
-			}
-		} else if(move.getInitialLocation().getY() + MAX_MOVE_DISTANCE == move.getEndLocation().getY()) {
-			if(move.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(move.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		} else if(move.getInitialLocation().getY() - MAX_MOVE_DISTANCE == move.getEndLocation().getY()) {
-			if(move.getInitialLocation().getIntX() + MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			} else if(move.getInitialLocation().getIntX() - MAX_MOVE_DISTANCE == move.getEndLocation().getIntX()) {
-				isValid = true;
-			}
-		}
-		return isValid;
-         */
 	}
 	
 	@Override

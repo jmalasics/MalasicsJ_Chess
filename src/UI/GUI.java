@@ -13,7 +13,7 @@ public class GUI implements UI {
     }
 
     @Override
-    public void displayExceptionMessage(Exception exception) {
+    public void displayErrorMessage(Exception exception) {
 
     }
 
@@ -24,6 +24,11 @@ public class GUI implements UI {
 
     @Override
     public void displayLogMessage(String string) {
+
+    }
+
+    @Override
+    public void displayCheckOrCheckmateMessage(String string) {
 
     }
 

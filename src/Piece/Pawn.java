@@ -25,64 +25,24 @@ public class Pawn extends Piece {
         if(!hasMoved) {
             isValid = isValidInitialMove(move, distance);
         } else if(distance == MAX_NORMAL_MOVE) {
-            if(team.getColor() == Color.BLACK) {
+            if(this.getColor() == Color.BLACK) {
                 isValid = isValidSouthMovement(distance, move);
-            } else if(team.getColor() == Color.WHITE)
+            } else if(this.getColor() == Color.WHITE)
                 isValid = isValidNorthMovement(distance, move);
         }
         return isValid;
-
-        /**
-		boolean isValid = false;
-		if(!hasMoved) {
-			isValid = isValidInitialMove(move);
-		} else if (move.getInitialLocation().getY() + MAX_NORMAL_MOVE == move
-				.getEndLocation().getY()
-				&& move.getInitialLocation().getIntX() == move
-						.getEndLocation().getIntX() && team.getColor() == Color.BLACK) {
-			isValid = true;
-		} else if (move.getInitialLocation().getY() - MAX_NORMAL_MOVE == move
-				.getEndLocation().getY()
-				&& move.getInitialLocation().getIntX() == move
-						.getEndLocation().getIntX() && team.getColor() == Color.WHITE) {
-			isValid = true;
-		}
-		return isValid;
-        */
 	}
 	
 	private boolean isValidInitialMove(Movement move, int distance) {
         boolean isValid = false;
         if(distance <= MAX_INITIAL_MOVE) {
-            if(team.getColor() == Color.BLACK) {
+            if(this.getColor() == Color.BLACK) {
                 isValid = isValidSouthMovement(distance, move);
-            } else if(team.getColor() == Color.WHITE) {
+            } else if(this.getColor() == Color.WHITE) {
                 isValid = isValidNorthMovement(distance, move);
             }
         }
         return isValid;
-
-        /**
-		boolean isValid = false;
-		if (move.getInitialLocation().getIntX() == move.getEndLocation()
-				.getIntX() && team.getColor() == Color.BLACK) {
-			if (move.getInitialLocation().getY() + MAX_INITIAL_MOVE == move
-					.getEndLocation().getY()
-					|| move.getInitialLocation().getY() + MAX_NORMAL_MOVE == move
-							.getEndLocation().getY()) {
-				isValid = true;
-			}
-		} else if (move.getInitialLocation().getIntX() == move
-				.getEndLocation().getIntX() && team.getColor() == Color.WHITE) {
-			if (move.getInitialLocation().getY() - MAX_INITIAL_MOVE == move
-					.getEndLocation().getY()
-					|| move.getInitialLocation().getY() - MAX_NORMAL_MOVE == move
-							.getEndLocation().getY()) {
-				isValid = true;
-			}
-		}
-		return isValid;
-        */
 	}
 	
 	@Override
@@ -90,33 +50,13 @@ public class Pawn extends Piece {
         int distance = Math.abs(capture.getInitialLocation().getArrayY() - capture.getEndLocation().getArrayY());
         boolean isValid = false;
         if(distance == MAX_NORMAL_MOVE) {
-            if(team.getColor() == Color.BLACK) {
+            if(this.getColor() == Color.BLACK) {
                 isValid = isValidSouthEastMovement(distance, capture) || isValidSouthWestMovement(distance, capture);
-            } else if(team.getColor() == Color.WHITE) {
+            } else if(this.getColor() == Color.WHITE) {
                 isValid = isValidNorthEastMovement(distance, capture) || isValidNorthWestMovement(distance, capture);
             }
         }
         return isValid;
-
-        /**
-		boolean isValid = false;
-		if ((capture.getInitialLocation().getIntX() + MAX_NORMAL_MOVE == capture
-				.getEndLocation().getIntX() || capture.getInitialLocation()
-				.getIntX() - MAX_NORMAL_MOVE == capture.getEndLocation()
-				.getIntX())
-				&& capture.getInitialLocation().getY() + MAX_NORMAL_MOVE == capture
-						.getEndLocation().getY() && team.getColor() == Color.BLACK) {
-			isValid = true;
-		} else if ((capture.getInitialLocation().getIntX() + MAX_NORMAL_MOVE == capture
-				.getEndLocation().getIntX() || capture.getInitialLocation()
-				.getIntX() - MAX_NORMAL_MOVE == capture.getEndLocation()
-				.getIntX())
-				&& capture.getInitialLocation().getY() - MAX_NORMAL_MOVE == capture
-						.getEndLocation().getY() && team.getColor() == Color.WHITE) {
-			isValid = true;
-		}
-		return isValid;
-        */
 	}
 	
 	public void pawnHasMoved() {

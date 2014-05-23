@@ -1,10 +1,7 @@
-a8 a4
-b8 a6
-c8 e6
-d8 a8
-a8 a5
-a5 c3
-e8 d8
-a6 c5
-a6 b8
-a4 b8
+e7 e5
+a2 a4
+d8 f6
+b1 a3
+f8 c5
+a1 b1
+f6 f2*

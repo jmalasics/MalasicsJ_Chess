@@ -55,8 +55,8 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/Piece/Pawn.java" line="22" class="Piece.Pawn" package="Piece">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/src/Piece/Pawn.java" line="23" class="Piece.Pawn" package="Piece">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -81,41 +81,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Team.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GameLogic/Team.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="13" selection-start="2147" selection-end="2147" vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="4883">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#476#477#0" expanded="true" />
-                <element signature="e#499#500#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChessGame.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ChessGame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameLogic/ChessGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="37" selection-start="3265" selection-end="3265" vertical-scroll-proportion="0.8271812" vertical-offset="1426" max-vertical-offset="2223">
+            <state line="91" column="46" selection-start="2510" selection-end="2510" vertical-scroll-proportion="0.0" vertical-offset="1081" max-vertical-offset="2508">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chess.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Chess.txt">
+      <file leaf-file-name="Console.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/Console.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="4" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="722">
+            <state line="41" column="4" selection-start="1024" selection-end="1157" vertical-scroll-proportion="0.0" vertical-offset="279" max-vertical-offset="1026">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Pawn.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Piece/Pawn.java">
+      <file leaf-file-name="GUI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="0" selection-start="1931" selection-end="1931" vertical-scroll-proportion="0.0" vertical-offset="944" max-vertical-offset="2603">
+            <state line="31" column="0" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0" vertical-offset="70" max-vertical-offset="779">
               <folding />
             </state>
           </provider>
@@ -124,33 +111,48 @@
       <file leaf-file-name="Piece.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Piece/Piece.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="0" selection-start="1112" selection-end="1112" vertical-scroll-proportion="0.0" vertical-offset="773" max-vertical-offset="1957">
+            <state line="67" column="56" selection-start="1544" selection-end="1544" vertical-scroll-proportion="0.0" vertical-offset="1273" max-vertical-offset="2204">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Location.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Location.java">
+      <file leaf-file-name="Team.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GameLogic/Team.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="0" selection-start="1485" selection-end="1485" vertical-scroll-proportion="0.0" vertical-offset="1400" max-vertical-offset="2280">
+            <state line="149" column="86" selection-start="4876" selection-end="4876" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7619">
               <folding>
-                <element signature="e#1506#1507#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Movement.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Movement.java">
+      <file leaf-file-name="ChessBoard.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Board/ChessBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="594" selection-end="594" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1539">
+            <state line="53" column="16" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.33224756" vertical-offset="803" max-vertical-offset="4427">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#444#445#0" expanded="true" />
-                <element signature="e#473#474#0" expanded="true" />
-                <element signature="e#617#618#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UI/UI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="16" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="494">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChessMovesTwo" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChessMovesTwo">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="6" selection-start="48" selection-end="48" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="247">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -158,28 +160,17 @@
       <file leaf-file-name="ChessMoves.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ChessMoves.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="5" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="304">
+            <state line="7" column="0" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="247">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Knight.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Piece/Knight.java">
+      <file leaf-file-name="Pawn.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Piece/Pawn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="51" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.0" vertical-offset="392" max-vertical-offset="1273">
+            <state line="72" column="0" selection-start="2152" selection-end="2152" vertical-scroll-proportion="0.0" vertical-offset="1368" max-vertical-offset="1520">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChessBoard.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Board/ChessBoard.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="23" selection-start="4587" selection-end="4587" vertical-scroll-proportion="0.0" vertical-offset="2401" max-vertical-offset="4446">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -192,6 +183,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
+    <option name="SYNC_SETTING" value="DONT" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -211,12 +203,6 @@
         <option value="$PROJECT_DIR$/src/PieceFactory/BishopFactory.java" />
         <option value="$PROJECT_DIR$/Chess.txt" />
         <option value="$PROJECT_DIR$/ChessCheckmate" />
-        <option value="$PROJECT_DIR$/src/Piece/Piece.java" />
-        <option value="$PROJECT_DIR$/src/Piece/King.java" />
-        <option value="$PROJECT_DIR$/src/Piece/Rook.java" />
-        <option value="$PROJECT_DIR$/src/Piece/Queen.java" />
-        <option value="$PROJECT_DIR$/src/Piece/Bishop.java" />
-        <option value="$PROJECT_DIR$/src/Piece/Pawn.java" />
         <option value="$PROJECT_DIR$/src/Exception/PlacementException.java" />
         <option value="$PROJECT_DIR$/src/Exception/MovementException.java" />
         <option value="$PROJECT_DIR$/src/Exception/CaptureException.java" />
@@ -229,20 +215,27 @@
         <option value="$PROJECT_DIR$/src/Exception/InvalidActionException.java" />
         <option value="$PROJECT_DIR$/src/PieceManipulation/InvalidAction.java" />
         <option value="$PROJECT_DIR$/src/Exception/NotTeamPieceException.java" />
-        <option value="$PROJECT_DIR$/src/UI/UI.java" />
         <option value="$PROJECT_DIR$/src/Parser/CaptureParser.java" />
         <option value="$PROJECT_DIR$/src/Parser/InvalidActionParser.java" />
         <option value="$PROJECT_DIR$/src/Parser/MoveParser.java" />
         <option value="$PROJECT_DIR$/src/Parser/MultimoveParser.java" />
-        <option value="$PROJECT_DIR$/src/UI/GUI.java" />
         <option value="$PROJECT_DIR$/src/IO/FileIO.java" />
         <option value="$PROJECT_DIR$/src/Parser/PlaceParser.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Knight.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Bishop.java" />
+        <option value="$PROJECT_DIR$/src/Piece/King.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Queen.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Rook.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Pawn.java" />
+        <option value="$PROJECT_DIR$/src/Piece/Piece.java" />
+        <option value="$PROJECT_DIR$/ChessMoves.txt" />
+        <option value="$PROJECT_DIR$/src/ChessMovesTwo" />
+        <option value="$PROJECT_DIR$/src/UI/UI.java" />
         <option value="$PROJECT_DIR$/src/UI/Console.java" />
+        <option value="$PROJECT_DIR$/src/UI/GUI.java" />
+        <option value="$PROJECT_DIR$/src/GameLogic/ChessGame.java" />
         <option value="$PROJECT_DIR$/src/GameLogic/Team.java" />
         <option value="$PROJECT_DIR$/src/Board/ChessBoard.java" />
-        <option value="$PROJECT_DIR$/src/Piece/Knight.java" />
-        <option value="$PROJECT_DIR$/ChessMoves.txt" />
-        <option value="$PROJECT_DIR$/src/GameLogic/ChessGame.java" />
       </list>
     </option>
   </component>
@@ -283,7 +276,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -466,6 +458,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -491,6 +484,11 @@
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="SearchEverywhereHistory" value="" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jmalasics\workspace\MalasicsJ_Chess" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.ChessGame">
     <configuration default="false" name="ChessGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -775,12 +773,14 @@
       <workItem from="1400165860631" duration="7389000" />
       <workItem from="1400252479505" duration="5115000" />
       <workItem from="1400597702933" duration="7567000" />
-      <workItem from="1400684300767" duration="3350000" />
+      <workItem from="1400684300767" duration="7214000" />
+      <workItem from="1400770523509" duration="6981000" />
+      <workItem from="1400856960327" duration="7183000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44527000" />
+    <option name="totallyTimeSpent" value="62555000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -791,11 +791,11 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30960086" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -803,10 +803,10 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32901832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30960086" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -835,13 +835,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Parser/MultimoveParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="71" selection-start="2557" selection-end="2557" vertical-scroll-proportion="0.0" vertical-offset="772" max-vertical-offset="1425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Parser/PlaceParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="37" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="1748">
@@ -938,40 +931,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parser/Parsable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="41" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="418" />
+        <state line="9" column="41" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="418">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PieceFactory/PieceFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="1" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="418">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/King.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="33" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0" vertical-offset="76" max-vertical-offset="1387">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/Rook.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="33" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0" vertical-offset="10" max-vertical-offset="1121">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/Queen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="34" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0" vertical-offset="76" max-vertical-offset="1805">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/Bishop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="35" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1140">
           <folding />
         </state>
       </provider>
@@ -1006,14 +973,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="59" column="75" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.0" vertical-offset="507" max-vertical-offset="1387">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Placement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="76" selection-start="721" selection-end="721" vertical-scroll-proportion="0.0" vertical-offset="163" max-vertical-offset="1064" />
+        <state line="39" column="76" selection-start="721" selection-end="721" vertical-scroll-proportion="0.0" vertical-offset="163" max-vertical-offset="1064">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Exception/InvalidActionException.java">
@@ -1025,7 +996,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PieceManipulation/InvalidAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="69" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342" />
+        <state line="8" column="69" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Exception/CaptureException.java">
@@ -1047,21 +1022,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Exception/NotTeamPieceException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/UI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="49" selection-start="343" selection-end="343" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="475">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Capture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="742" selection-end="742" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1444">
+        <state line="10" column="0" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342">
           <folding />
         </state>
       </provider>
@@ -1094,13 +1055,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="408" selection-end="408" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/IO/FileIO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="28" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="1121">
@@ -1115,44 +1069,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UI/Console.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="5" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="1064">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chess.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="4" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="722">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/Pawn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="1931" selection-end="1931" vertical-scroll-proportion="0.0" vertical-offset="944" max-vertical-offset="2603">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Piece/Piece.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="1112" selection-end="1112" vertical-scroll-proportion="0.0" vertical-offset="773" max-vertical-offset="1957">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Movement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="594" selection-end="594" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1539">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#444#445#0" expanded="true" />
-            <element signature="e#473#474#0" expanded="true" />
-            <element signature="e#617#618#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="6" column="4" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="722" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Location.java">
@@ -1164,44 +1083,126 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameLogic/Team.java">
+    <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Capture.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="13" selection-start="2147" selection-end="2147" vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="4883">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#499#500#0" expanded="true" />
-          </folding>
+        <state line="38" column="0" selection-start="742" selection-end="742" vertical-scroll-proportion="0.50838923" vertical-offset="324" max-vertical-offset="1425">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board/ChessBoard.java">
+    <entry file="file://$PROJECT_DIR$/src/PieceManipulation/Movement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="23" selection-start="4587" selection-end="4587" vertical-scroll-proportion="0.0" vertical-offset="2401" max-vertical-offset="4446">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="37" column="24" selection-start="711" selection-end="714" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1539">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/Bishop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="61" selection-start="536" selection-end="536" vertical-scroll-proportion="0.0" vertical-offset="145" max-vertical-offset="741">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/King.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="100" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="817">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Piece/Knight.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="51" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.0" vertical-offset="392" max-vertical-offset="1273">
+        <state line="44" column="82" selection-start="1676" selection-end="1676" vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="1273">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/Queen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="104" selection-start="885" selection-end="885" vertical-scroll-proportion="0.0" vertical-offset="228" max-vertical-offset="855">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/Rook.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="56" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="798">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/Piece.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="56" selection-start="1544" selection-end="1544" vertical-scroll-proportion="0.0" vertical-offset="862" max-vertical-offset="2033">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Piece/Pawn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="0" selection-start="2152" selection-end="2152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1463">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ChessMoves.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="5" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="304">
+        <state line="7" column="0" selection-start="43" selection-end="43" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="247">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChessMovesTwo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="6" selection-start="48" selection-end="48" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="247">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0" vertical-offset="70" max-vertical-offset="779">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/Console.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="4" selection-start="1024" selection-end="1157" vertical-scroll-proportion="0.0" vertical-offset="279" max-vertical-offset="1026">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UI/UI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="16" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="494">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameLogic/ChessGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="37" selection-start="3265" selection-end="3265" vertical-scroll-proportion="0.8271812" vertical-offset="1426" max-vertical-offset="2223">
+        <state line="91" column="46" selection-start="2510" selection-end="2510" vertical-scroll-proportion="0.0" vertical-offset="1081" max-vertical-offset="2508">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameLogic/Team.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="86" selection-start="4876" selection-end="4876" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7619">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board/ChessBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="16" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.33224756" vertical-offset="803" max-vertical-offset="4427">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

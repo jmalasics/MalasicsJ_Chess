@@ -15,27 +15,6 @@ public class Bishop extends Piece {
         int distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
         return distance > 0 && (isValidNorthEastMovement(distance, move) || isValidNorthWestMovement(distance, move) || isValidSouthEastMovement(distance, move)
                 || isValidSouthWestMovement(distance, move));
-
-        /**
-        boolean isValid = false;
-		int distance = Math.abs(move.getInitialLocation().getIntX() - move.getEndLocation().getIntX());
-		if(distance > 0) {
-			if(move.getInitialLocation().getIntX() + distance == move.getEndLocation().getIntX()) {
-				if(move.getInitialLocation().getArrayY() + distance == move.getEndLocation().getArrayY()) {
-					isValid = true;
-				} else if(move.getInitialLocation().getArrayY() - distance == move.getEndLocation().getArrayY()) {
-					isValid = true;
-				}
-			} else if(move.getInitialLocation().getIntX() - distance == move.getEndLocation().getIntX()) {
-				if(move.getInitialLocation().getArrayY() + distance == move.getEndLocation().getArrayY()) {
-					isValid = true;
-				} else if(move.getInitialLocation().getArrayY() - distance == move.getEndLocation().getArrayY()) {
-					isValid = true;
-				}
-			}
-		}
-		return isValid;
-        */
 	}
 	
 	public String getPieceName() {

@@ -25,6 +25,10 @@ public abstract class Piece {
 	public void clearMoves() {
 		possibleMoves = new ArrayList<ChessAction>();
 	}
+
+    public boolean isOnSameTeam(Piece piece) {
+        return this.getColor() == piece.getColor();
+    }
 	
 	public ArrayList<ChessAction> getMoves() {
 		return possibleMoves;
@@ -57,11 +61,11 @@ public abstract class Piece {
 	public abstract String getPieceName();
 
     protected boolean isValidNorthMovement(int distance, ChessAction action) {
-        return action.getInitialLocation().getArrayY() + distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
+        return action.getInitialLocation().getArrayY() - distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
     }
 
     protected boolean isValidSouthMovement(int distance, ChessAction action) {
-        return action.getInitialLocation().getArrayY() - distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
+        return action.getInitialLocation().getArrayY() + distance == action.getEndLocation().getArrayY() && action.getInitialLocation().getIntX() == action.getEndLocation().getIntX();
     }
 
     protected boolean isValidEastMovement(int distance, ChessAction action) {

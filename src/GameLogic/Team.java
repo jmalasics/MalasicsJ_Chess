@@ -7,13 +7,11 @@ import Piece.*;
 import PieceManipulation.*;
 import Board.*;
 import Exception.*;
-import UI.*;
 
 public class Team {
 
 	private Color teamColor;
 	private ArrayList<Piece> pieces;
-    private UI ui;
 	
 	private Location kingLocation;
 	
@@ -22,34 +20,60 @@ public class Team {
 		pieces = new ArrayList<Piece>();
 	}
 
-    public void setUI(UI ui) {
-        this.ui = ui;
-    }
-	
+    /**
+     * Gets the color of the team.
+     *
+     * @return the color for the team
+     */
 	public Color getColor() {
 		return teamColor;
 	}
-	
+
+    /**
+     * Adds a piece to the team.
+     *
+     * @param piece the piece being added to the team
+     * @param board the board that the piece was added on
+     */
 	public void addPiece(Piece piece, ChessBoard board) {
 		pieces.add(piece);
 		if(piece instanceof King && piece.getTeam().equals(this)) {
 			kingLocation = board.getPieceLocation(piece);
 		}
 	}
-	
+
+    /**
+     * Removes a piece from the team.
+     *
+     * @param piece the piece you wish to remove from the team
+     */
 	public void removePiece(Piece piece) {
 		pieces.remove(piece);
 	}
-	
+
+    /**
+     * Takes in an action and after determining if the move is allowed it executes the action.
+     *
+     * @param action the action you wish the team to perform
+     * @param board the board that you are performing the action on
+     * @param otherTeam the enemy team of this team
+     * @return a boolean representing if the action was successful or not
+     * @throws Exception
+     */
 	public boolean performAction(ChessAction action, ChessBoard board, Team otherTeam) throws Exception {
-		boolean actionCompleted = false;
+		boolean actionCompleted;
         //if(!isInCheckmate(board, otherTeam)) {
 		    findAllAvailableMoves(board, otherTeam);
+            if(board.getPieceAt(action.getInitialLocation()) == null) {
+                throw new MovementException("There is no piece to move.");
+            }
 		    if(isTeamPiece(action.getInitialLocation(), board)) {
 		        if(containsMove(action, board.getPieceAt(action.getInitialLocation()))) {
 			        actionCompleted = action.executeAction(board);
 			        getKingLocation(board);
-		        }
+		        } else {
+                    throw new InvalidActionException("Invalid move for that piece.");
+                }
 		    } else {
                 throw new NotTeamPieceException("Cannot move a piece that isn't yours.");
 		    }
@@ -59,7 +83,14 @@ public class Team {
         //}
 		return actionCompleted;
 	}
-	
+
+    /**
+     * Checks to see if the action is a contained in the valid moves for the piece.
+     *
+     * @param action the action you wish the piece to perform
+     * @param piece the piece you wish to perform the action
+     * @return a boolean representing if the action is in the list of its valid moves
+     */
 	public boolean containsMove(ChessAction action, Piece piece) {
 		boolean isContained = false;
 		for(ChessAction act : piece.getMoves()) {
@@ -73,29 +104,31 @@ public class Team {
 	/**
 	 * Returns if move puts team in check or not.
 	 * 
-	 * @param action
-	 * @param board
-	 * @return
+	 * @param action the action that you wish to perform
+	 * @param board the board that the action is being performed on
+	 * @return a boolean representing if the team is in check after the move
 	 */
-	public boolean isMovingIntoCheck(ChessAction action, ChessBoard board, Team otherTeam) {
-		boolean isMovingIntoCheck = false;
+	public boolean isMovingIntoCheck(ChessAction action, ChessBoard board, Team otherTeam) throws PlacementException {
+		boolean isMovingIntoCheck;
         Piece capturedPiece = null;
         if(action instanceof Capture) {
             capturedPiece = board.getPieceAt(action.getEndLocation());
         }
         board.movePiece(action.getInitialLocation(), action.getEndLocation());
         otherTeam.findAllAvailableMoves(board, this);
-        isMovingIntoCheck = isInCheck(board, otherTeam.getMoves());
+        isMovingIntoCheck = isInCheck(otherTeam.getMoves());
         board.movePiece(action.getEndLocation(), action.getInitialLocation());
-        try {
-            board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
-        } catch(PlacementException placementException) {
-
-        }
+        board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
         otherTeam.findAllAvailableMoves(board, this);
         return isMovingIntoCheck;
 	}
-	
+
+    /**
+     * Finds all the available moves for the team.
+     *
+     * @param board the board you are currently playing on
+     * @param otherTeam the enemy team of this team
+     */
 	private void findAllAvailableMoves(ChessBoard board, Team otherTeam) {
 		for(Piece piece : pieces) {
 			piece.clearMoves();
@@ -106,15 +139,33 @@ public class Team {
 			//removeIntoCheckMoves(piece, board, otherTeam);
 		}
 	}
-	
+
+    /**
+     * Removes moves that result in your king being in check.
+     *
+     * @param piece the piece that you are removing the actions from
+     * @param board the board that you are playing on
+     * @param otherTeam the enemy team of this team
+     */
 	private void removeIntoCheckMoves(Piece piece, ChessBoard board, Team otherTeam) {
 		for(int i = 0; i < piece.getMoves().size(); i++) {
+            try {
 			if(isMovingIntoCheck(piece.getMoves().get(i), board, otherTeam)) {
 				piece.getMoves().remove(piece.getMoves().get(i));
 			}
+            } catch(PlacementException pe) {
+                pe.printStackTrace();
+            }
 		}
 	}
-	
+
+    /**
+     * Gets all the available moves for the piece.
+     *
+     * @param board the board you are currently playing on
+     * @param piece the piece you are getting the valid moves for
+     * @return a list of valid moves for the piece
+     */
 	private ArrayList<ChessAction> allAvailableMovesForPiece(ChessBoard board, Piece piece) {
 		ArrayList<ChessAction> actions = new ArrayList<ChessAction>();
 		for(int i = 0; i < ChessBoard.BOARD_ROWS; i++) {
@@ -134,39 +185,83 @@ public class Team {
 		}
 		return actions;
 	}
-	
+
+    /**
+     * Adds the possible moves of a piece to the piece.
+     *
+     * @param piece the piece you are adding the possible actions to
+     * @param actions the list of the actions that you are adding to the piece
+     */
 	private void addPossibleMoves(Piece piece, ArrayList<ChessAction> actions) {
 		for(ChessAction action : actions) {
 			piece.addMove(action);
 		}
 	}
-	
+
+    /**
+     * Checks to see if the piece at the location is on this team or not.
+     *
+     * @param location the location of the piece
+     * @param board the board you are currently playing on
+     * @return a boolean representing if the piece at the location is on your team or not
+     */
 	private boolean isTeamPiece(Location location, ChessBoard board) {
-		return board.getPieceAt(location) != null ? board.getPieceAt(location).getColor() == this.teamColor : false;
+        boolean isTeamPiece = false;
+        if(board.getPieceAt(location) != null) {
+            isTeamPiece = board.getPieceAt(location).getColor() == this.teamColor;
+        }
+		return isTeamPiece;
 	}
-	
-	public boolean isInCheck(ChessBoard board, ArrayList<ChessAction> enemyActions) {
+
+    /**
+     * Checks to see if the king is in check.
+     *
+     * @param enemyActions the actions of the enemy team
+     * @return a boolean representing if you are in check or not
+     */
+	public boolean isInCheck(ArrayList<ChessAction> enemyActions) {
 		boolean isInCheck = false;
 		for(ChessAction action : enemyActions) {
-			isInCheck = action.getEndLocation().equals(kingLocation) ? true : isInCheck;
+            if(action instanceof Capture && !isInCheck) {
+                Capture possibleCheckCapture = (Capture) action;
+                isInCheck = possibleCheckCapture.getEndLocation().equals(kingLocation);
+            }
+
 		}
 		return isInCheck;
 	}
 
-    public boolean isInCheckmate(ChessBoard board, Team otherTeam) {
-        return isInCheck(board, otherTeam.getMoves()) && otherTeam.getMoves().size() == 0;
+    /**
+     * Checks to see if the king is in checkmate.
+     *
+     * @param otherTeam the enemy team of this team
+     * @return a boolean representing if you are in checkmate or not
+     */
+    public boolean isInCheckmate(Team otherTeam) {
+        return isInCheck(otherTeam.getMoves()) && otherTeam.getMoves().size() == 0;
     }
-	
-	public void displayCheckMessage() {
-		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
-        ui.displayMessage("The " + teamColorString +"'s king is in check.");
+
+    /**
+     * Sends the check message to the UI to be displayed.
+     *
+     */
+	public String checkMessage() {
+        return "The " + toString() +"'s king is in check.";
 	}
-	
-	public void displayCheckmateMessage() {
-		String teamColorString = teamColor == Color.WHITE ? "White" : "Black";
-        ui.displayMessage(teamColorString + " has been checkmated.");
+
+    /**
+     * Sends the checkmate message to the UI to be displayed.
+     *
+     */
+	public String checkmateMessage() {
+        return toString() + " has been checkmated.";
 	}
-	
+
+    /**
+     * Gets the location of the team's king.
+     *
+     * @param board the board you are currently playing on
+     */
 	private void getKingLocation(ChessBoard board) {
 		for(Piece piece : pieces) {
 			if(piece instanceof King && piece.getTeam().equals(this)) {
@@ -174,7 +269,14 @@ public class Team {
 			}
 		}
 	}
-	
+
+    /**
+     * Checks to see if the action is blocked by a piece or not.
+     *
+     * @param action the action you are checking if it is blocked or not
+     * @param board the board you are currently playing on
+     * @return a boolean representing if the action if blocked or not
+     */
 	private boolean isBlockedAction(ChessAction action, ChessBoard board) {
 		boolean isBlocked = false;
 		int xDirection = getXDirection(action);
@@ -191,6 +293,12 @@ public class Team {
 		return isBlocked;
 	}
 
+    /**
+     * Gets the y direction of the action.
+     *
+     * @param action the action you are getting the y direction for
+     * @return an integer representing which y direction you are traveling, 1 for down, -1 for up, or 0 for neither
+     */
     private int getYDirection(ChessAction action) {
         int yDirection = 0;
         if(action.getEndLocation().getArrayY() - action.getInitialLocation().getArrayY() != 0) {
@@ -199,6 +307,12 @@ public class Team {
         return yDirection;
     }
 
+    /**
+     * Gets the x direction of the action.
+     *
+     * @param action the action you are getting the x direction for
+     * @return an integer representing which x direction you are traveling, 1 for right, -1 for left, or 0 for neither
+     */
     private int getXDirection(ChessAction action) {
         int xDirection = 0;
         if(action.getEndLocation().getIntX() - action.getInitialLocation().getIntX() != 0) {
@@ -207,10 +321,24 @@ public class Team {
         return xDirection;
     }
 
+    /**
+     * Checks to see if the the current location that is being checked is the end location or not.
+     *
+     * @param xLocation the current x location you are at
+     * @param yLocation the current y location you are at
+     * @param action the action you are checking if it is blocked or not
+     * @return a boolean representing if you have reached the end location of the action
+     */
     private boolean reachedActionEndLocation(int xLocation, int yLocation, ChessAction action) {
         return xLocation == action.getEndLocation().getIntX() && yLocation == action.getEndLocation().getArrayY();
     }
-	
+
+    /**
+     * Removes all the moves that are blocked by another piece when the piece is not a knight.
+     *
+     * @param board the board you are currently playing on
+     * @param piece the piece that you are removing blocked actions for
+     */
 	private void removeBlockedActions(ChessBoard board, Piece piece) {
         int index = 0;
         while(index != piece.getMoves().size()) {
@@ -222,7 +350,12 @@ public class Team {
             }
         }
 	}
-	
+
+    /**
+     * Gets all the possible moves for the team.
+     *
+     * @return a list of all the possible moves for the team
+     */
 	public ArrayList<ChessAction> getMoves() {
 		ArrayList<ChessAction> allPossibleMoves = new ArrayList<ChessAction>();
 		for(Piece piece : pieces) {
@@ -244,10 +377,21 @@ public class Team {
 
 	@Override
 	public boolean equals(Object obj) {
-		Team otherTeam = (Team) obj;
-		return this.teamColor == otherTeam.getColor();
+        boolean isEqual = false;
+        if(obj instanceof Team) {
+		    Team otherTeam = (Team) obj;
+		    isEqual = this.teamColor == otherTeam.getColor();
+        }
+        return isEqual;
 	}
 	
-	
+	@Override
+    public String toString() {
+        String teamColor = "White";
+        if(this.getColor() == Color.BLACK) {
+            teamColor = "Black";
+        }
+        return teamColor;
+    }
 	
 }

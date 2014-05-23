@@ -42,7 +42,7 @@ public class Knight extends Piece {
 	private boolean checkLeftMove(Movement move) {
 		return move.getInitialLocation().getIntX() - INITIAL_MOVE == move
 				.getEndLocation().getIntX() && (move.getInitialLocation().getY() + SECOND_MOVE == move
-					.getEndLocation().getY() || move.getInitialLocation().getY() + SECOND_MOVE == move
+					.getEndLocation().getY() || move.getInitialLocation().getY() - SECOND_MOVE == move
 					.getEndLocation().getY());
 	}
 	
