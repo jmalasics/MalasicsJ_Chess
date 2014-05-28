@@ -2,6 +2,7 @@ package PieceFactory;
 
 import GameLogic.Team;
 import Piece.*;
+import PieceManipulation.Location;
 
 /**
  * Created by jmalasics on 5/14/14.
@@ -9,8 +10,8 @@ import Piece.*;
 public class QueenFactory extends PieceFactory {
 
     @Override
-    public Piece createPiece(char color) {
-        return new Queen(new Team(getColor(color)));
+    public Piece createPiece(char color, Location location) {
+        return new Queen(new Team(getColor(color)), location);
     }
 
 }

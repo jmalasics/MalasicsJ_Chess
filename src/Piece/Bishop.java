@@ -6,8 +6,8 @@ import PieceManipulation.*;
 
 public class Bishop extends Piece {
 
-	public Bishop(Team team) {
-		super(team);
+	public Bishop(Team team, Location location) {
+		super(team, location);
 	}
 	
 	@Override
@@ -30,5 +30,14 @@ public class Bishop extends Piece {
 	public String toString() {
 		return "b";
 	}
-	
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Bishop && super.equals(obj);
+    }
 }

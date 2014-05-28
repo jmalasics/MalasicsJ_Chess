@@ -13,8 +13,8 @@ public class Pawn extends Piece {
 	
 	private boolean hasMoved;
 	
-	public Pawn(Team team) {
-		super(team);
+	public Pawn(Team team, Location location) {
+		super(team, location);
 		hasMoved = false;
 	}
 	
@@ -62,6 +62,11 @@ public class Pawn extends Piece {
 	public void pawnHasMoved() {
 		hasMoved = true;
 	}
+
+    public void resetHasMoved() {
+        hasMoved = false;
+    }
+
 	public String getPieceName() {
 		return "Pawn";
 	}
@@ -70,5 +75,20 @@ public class Pawn extends Piece {
 	public String toString() {
 		return "p";
 	}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEqual = false;
+        if(obj != null && obj instanceof Pawn) {
+            Pawn pawn = (Pawn) obj;
+            isEqual = pawn.hasMoved == this.hasMoved && super.equals(pawn);
+        }
+        return isEqual;
+    }
 
 }

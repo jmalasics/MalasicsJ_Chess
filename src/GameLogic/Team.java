@@ -12,12 +12,14 @@ public class Team {
 
 	private Color teamColor;
 	private ArrayList<Piece> pieces;
+    private ArrayList<Piece> capturedPieces;
 	
 	private Location kingLocation;
 	
 	public Team(Color color) {
 		teamColor = color;
 		pieces = new ArrayList<Piece>();
+        capturedPieces = new ArrayList<Piece>();
 	}
 
     /**
@@ -43,13 +45,24 @@ public class Team {
 	}
 
     /**
-     * Removes a piece from the team.
+     * Removes the piece from the team's active pieces.
      *
      * @param piece the piece you wish to remove from the team
      */
-	public void removePiece(Piece piece) {
+	public void addCapturedPiece(Piece piece) {
 		pieces.remove(piece);
+        capturedPieces.add(piece);
 	}
+
+    public Piece getPieceAt(Location location) {
+        Piece targetPiece = null;
+        for(Piece piece : pieces) {
+            if(piece.getLocation().equals(location)) {
+                targetPiece = piece;
+            }
+        }
+        return targetPiece;
+    }
 
     /**
      * Takes in an action and after determining if the move is allowed it executes the action.
@@ -62,25 +75,29 @@ public class Team {
      */
 	public boolean performAction(ChessAction action, ChessBoard board, Team otherTeam) throws Exception {
 		boolean actionCompleted;
-        //if(!isInCheckmate(board, otherTeam)) {
-		    findAllAvailableMoves(board, otherTeam);
-            if(board.getPieceAt(action.getInitialLocation()) == null) {
-                throw new MovementException("There is no piece to move.");
-            }
-		    if(isTeamPiece(action.getInitialLocation(), board)) {
-		        if(containsMove(action, board.getPieceAt(action.getInitialLocation()))) {
-			        actionCompleted = action.executeAction(board);
-			        getKingLocation(board);
-		        } else {
-                    throw new InvalidActionException("Invalid move for that piece.");
+		findAllAvailableMoves(board);
+        removeIntoCheckMoves(board, otherTeam);
+        if(board.getPieceAt(action.getInitialLocation()) == null) {
+            throw new MovementException("There is no piece to move.");
+        }
+	    if(isTeamPiece(action.getInitialLocation(), board)) {
+		    if(containsMove(action, board.getPieceAt(action.getInitialLocation()))) {
+	    	    actionCompleted = action.executeAction(board);
+			    getKingLocation();
+                board.getPieceAt(action.getEndLocation()).setLocation(action.getEndLocation());
+                if(action instanceof Capture) {
+                    otherTeam.addCapturedPiece(otherTeam.getPieceAt(action.getEndLocation()));
                 }
 		    } else {
-                throw new NotTeamPieceException("Cannot move a piece that isn't yours.");
-		    }
-		    findAllAvailableMoves(board, otherTeam);
-        //} else {
-         //   displayCheckmateMessage();
-        //}
+                throw new InvalidActionException("Invalid move for that piece.");
+            }
+		} else {
+             throw new NotTeamPieceException("Cannot move a piece that isn't yours.");
+		}
+		findAllAvailableMoves(board);
+        removeIntoCheckMoves(board, otherTeam);
+        otherTeam.findAllAvailableMoves(board);
+        otherTeam.removeIntoCheckMoves(board, this);
 		return actionCompleted;
 	}
 
@@ -100,8 +117,9 @@ public class Team {
 		}
 		return isContained;
 	}
-	
-	/**
+
+    //TODO Checkmate Marker
+    /**
 	 * Returns if move puts team in check or not.
 	 * 
 	 * @param action the action that you wish to perform
@@ -115,11 +133,19 @@ public class Team {
             capturedPiece = board.getPieceAt(action.getEndLocation());
         }
         board.movePiece(action.getInitialLocation(), action.getEndLocation());
-        otherTeam.findAllAvailableMoves(board, this);
+        board.getPieceAt(action.getEndLocation()).setLocation(action.getEndLocation());
+        getKingLocation();
+        otherTeam.findAllAvailableMoves(board);
         isMovingIntoCheck = isInCheck(otherTeam.getMoves());
         board.movePiece(action.getEndLocation(), action.getInitialLocation());
         board.placePiece(new Placement(action.getEndLocation(), capturedPiece));
-        otherTeam.findAllAvailableMoves(board, this);
+        if(board.getPieceAt(action.getInitialLocation()) instanceof Pawn) {
+            Pawn pawn = (Pawn) board.getPieceAt(action.getInitialLocation());
+            pawn.resetHasMoved();
+        }
+        board.getPieceAt(action.getInitialLocation()).setLocation(action.getInitialLocation());
+        getKingLocation();
+        otherTeam.findAllAvailableMoves(board);
         return isMovingIntoCheck;
 	}
 
@@ -127,36 +153,36 @@ public class Team {
      * Finds all the available moves for the team.
      *
      * @param board the board you are currently playing on
-     * @param otherTeam the enemy team of this team
      */
-	private void findAllAvailableMoves(ChessBoard board, Team otherTeam) {
+	private void findAllAvailableMoves(ChessBoard board) {
 		for(Piece piece : pieces) {
 			piece.clearMoves();
 			addPossibleMoves(piece, allAvailableMovesForPiece(board, piece));
 			if(!(piece instanceof Knight)) {
 				removeBlockedActions(board, piece);
 			}
-			//removeIntoCheckMoves(piece, board, otherTeam);
 		}
 	}
 
+    //TODO Checkmate Marker
     /**
      * Removes moves that result in your king being in check.
      *
-     * @param piece the piece that you are removing the actions from
      * @param board the board that you are playing on
      * @param otherTeam the enemy team of this team
      */
-	private void removeIntoCheckMoves(Piece piece, ChessBoard board, Team otherTeam) {
-		for(int i = 0; i < piece.getMoves().size(); i++) {
-            try {
-			if(isMovingIntoCheck(piece.getMoves().get(i), board, otherTeam)) {
-				piece.getMoves().remove(piece.getMoves().get(i));
-			}
-            } catch(PlacementException pe) {
-                pe.printStackTrace();
-            }
-		}
+	private void removeIntoCheckMoves(ChessBoard board, Team otherTeam) {
+        for(Piece piece : pieces) {
+		    for(int i = piece.getMoves().size() - 1; i > -1; i--) {
+                try {
+			        if(isMovingIntoCheck(piece.getMoves().get(i), board, otherTeam)) {
+				        piece.getMoves().remove(piece.getMoves().get(i));
+			        }
+                } catch(PlacementException pe) {
+                    pe.printStackTrace();
+                }
+		    }
+        }
 	}
 
     /**
@@ -171,12 +197,12 @@ public class Team {
 		for(int i = 0; i < ChessBoard.BOARD_ROWS; i++) {
 			for(int j = 0; j < ChessBoard.BOARD_COLUMNS; j++) {
 				if(board.getPieceAt(new Location(j, i)) == null) {
-					Movement move = new Movement(board.getPieceLocation(piece), new Location(j, i));
+					Movement move = new Movement(piece.getLocation(), new Location(j, i));
 					if(board.canMove(move)) {
 						actions.add(move);
 					}
 				} else if(board.getPieceAt(new Location(j, i)).getColor() != piece.getColor()){
-					Capture capture = new Capture(board.getPieceLocation(piece), new Location(j, i));
+					Capture capture = new Capture(piece.getLocation(), new Location(j, i));
 					if(board.canCapture(capture)) {
 						actions.add(capture);
 					}
@@ -213,6 +239,7 @@ public class Team {
 		return isTeamPiece;
 	}
 
+    //TODO Checkmate Marker
     /**
      * Checks to see if the king is in check.
      *
@@ -231,6 +258,7 @@ public class Team {
 		return isInCheck;
 	}
 
+    //TODO Checkmate Marker
     /**
      * Checks to see if the king is in checkmate.
      *
@@ -238,7 +266,17 @@ public class Team {
      * @return a boolean representing if you are in checkmate or not
      */
     public boolean isInCheckmate(Team otherTeam) {
-        return isInCheck(otherTeam.getMoves()) && otherTeam.getMoves().size() == 0;
+        return isInCheck(otherTeam.getMoves()) && this.getMoves().size() == 0;
+    }
+
+    /**
+     * Checks to see if the game is in a stalemate
+     *
+     * @param otherTeam the enemy team of this team
+     * @return a boolean representing if the game is in a stalemate or not
+     */
+    public boolean isStalemate(Team otherTeam) {
+        return !isInCheck(otherTeam.getMoves()) && this.getMoves().size() == 0;
     }
 
     /**
@@ -260,12 +298,11 @@ public class Team {
     /**
      * Gets the location of the team's king.
      *
-     * @param board the board you are currently playing on
      */
-	private void getKingLocation(ChessBoard board) {
+	private void getKingLocation() {
 		for(Piece piece : pieces) {
 			if(piece instanceof King && piece.getTeam().equals(this)) {
-				kingLocation = board.getPieceLocation(piece);
+				kingLocation = piece.getLocation();
 			}
 		}
 	}

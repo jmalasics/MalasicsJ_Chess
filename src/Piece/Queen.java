@@ -6,8 +6,8 @@ import PieceManipulation.*;
 
 public class Queen extends Piece {
 
-	public Queen(Team team) {
-		super(team);
+	public Queen(Team team, Location location) {
+		super(team, location);
 	}
 	
 	@Override
@@ -36,5 +36,20 @@ public class Queen extends Piece {
 	public String toString() {
 		return "q";
 	}
-	
+
+    @Override
+    public void setLocation(Location location) {
+        super.setLocation(location);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Queen && super.equals(obj);
+    }
+
 }

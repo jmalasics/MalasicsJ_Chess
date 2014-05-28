@@ -89,8 +89,16 @@ public class ChessGame {
 				} else {
                     if(!(action instanceof InvalidAction)) {
                         if(currentTeam.performAction(action, board, otherTeam)) {
+                            //System.out.println("Current Team: " + currentTeam.getMoves().size() + " Other team: " + otherTeam.getMoves().size());
                             if(otherTeam.isInCheck(currentTeam.getMoves())) {
+                                if(otherTeam.isInCheckmate(currentTeam)) {
+                                    ui.displayBoard(board);
+                                    ui.displayCheckOrCheckmateMessage(otherTeam.checkmateMessage());
+                                    ui.displayMessage(currentTeam.toString() + " wins!");
+                                }
                                 ui.displayCheckOrCheckmateMessage(otherTeam.checkMessage());
+                            } else if(otherTeam.isStalemate(currentTeam)) {
+                                ui.displayMessage(otherTeam.toString() + " is unable to move. Stalemate!");
                             }
                             changeTurn();
                             ui.displayBoard(board);

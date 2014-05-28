@@ -6,8 +6,8 @@ import PieceManipulation.*;
 
 public class Rook extends Piece {
 	
-	public Rook(Team team) {
-		super(team);
+	public Rook(Team team, Location location) {
+		super(team, location);
 	}
 	
 	@Override
@@ -33,5 +33,15 @@ public class Rook extends Piece {
 	public String toString() {
 		return "r";
 	}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Rook && super.equals(obj);
+    }
 
 }

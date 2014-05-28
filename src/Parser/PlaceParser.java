@@ -56,7 +56,7 @@ public class PlaceParser implements Parsable {
         int y = Integer.parseInt("" + input.charAt(PLACEMENT_Y_COORD));
         Location location = new Location(input.charAt(PLACEMENT_X_COORD), y);
         Piece piece = determinePiece(input.charAt(PIECE_TYPE),
-                input.charAt(PIECE_COLOR));
+                input.charAt(PIECE_COLOR), location);
         Placement place = new Placement(location, piece);
         printAction(place);
         return place;
@@ -79,8 +79,8 @@ public class PlaceParser implements Parsable {
      * @param color
      * @return
      */
-    private Piece determinePiece(char charForPiece, char color) {
-        return pieceFactories.get(charForPiece).createPiece(color);
+    private Piece determinePiece(char charForPiece, char color, Location location) {
+        return pieceFactories.get(charForPiece).createPiece(color, location);
     }
 
 }

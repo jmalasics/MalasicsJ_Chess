@@ -12,11 +12,21 @@ public abstract class Piece {
 
 	protected Team team;
 	private ArrayList<ChessAction> possibleMoves;
+    private Location location;
 	
-	public Piece(Team team) {
+	public Piece(Team team, Location location) {
 		this.team = team;
 		possibleMoves = new ArrayList<ChessAction>();
+        this.location = location;
 	}
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
 	
 	public void addMove(ChessAction action) {
 		possibleMoves.add(action);
@@ -102,7 +112,12 @@ public abstract class Piece {
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj != null && this == obj && this.team.equals(((Piece) obj).team);
+        boolean isEqual = false;
+        if(obj != null && obj instanceof Piece) {
+            Piece piece = (Piece) obj;
+            isEqual = piece.getLocation().equals(this.getLocation()) && piece.getTeam().equals(this.getTeam());
+        }
+		return isEqual;
 	}
 	
 	

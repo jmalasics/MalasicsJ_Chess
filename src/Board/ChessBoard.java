@@ -7,7 +7,7 @@ import Piece.Pawn;
 import PieceManipulation.*;
 import Exception.*;
 
-public class ChessBoard {
+public class ChessBoard implements Cloneable {
 	
 	private Square[][] board;
 	
@@ -19,7 +19,22 @@ public class ChessBoard {
 		createBoard();
 	}
 
-	/**
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public ChessBoard getClone() {
+        ChessBoard clone = null;
+        try {
+            clone = (ChessBoard) clone();
+        } catch(CloneNotSupportedException e) {
+
+        }
+        return clone;
+    }
+
+    /**
 	 * Adds all the squares to the 2 dimensional array that makes up the board itself. Every Square has a color that alternates and 
 	 * also has the location of where the square is.
 	 * 
@@ -74,6 +89,7 @@ public class ChessBoard {
 				isValidMove = true;
 			}
 		}
+
 		return isValidMove;
 	}
 	
@@ -89,6 +105,8 @@ public class ChessBoard {
         if(canMove(move)) {
             movePiece(move.getInitialLocation(), move.getEndLocation());
             actionCompleted = true;
+        } else {
+            throw new MovementException("The move is invalid.");
         }
         return actionCompleted;
 	}
@@ -123,6 +141,8 @@ public class ChessBoard {
         if(canCapture(capture)) {
             movePiece(capture.getInitialLocation(), capture.getEndLocation());
             actionCompleted = true;
+        } else {
+            throw new CaptureException("The capture is invalid.");
         }
         return actionCompleted;
 	}

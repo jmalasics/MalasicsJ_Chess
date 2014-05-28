@@ -9,8 +9,8 @@ public class Knight extends Piece {
 	public static final int INITIAL_MOVE = 2;
 	public static final int SECOND_MOVE = 1;
 	
-	public Knight(Team team) {
-		super(team);
+	public Knight(Team team, Location location) {
+		super(team, location);
 	}
 	
 	@Override
@@ -58,5 +58,15 @@ public class Knight extends Piece {
 	public String toString() {
 		return "n";
 	}
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Knight && super.equals(obj);
+    }
 
 }

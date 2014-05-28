@@ -3,12 +3,8 @@ package UI;
 import Board.ChessBoard;
 
 public class Console implements UI {
-	
-	/**
-	 * Displays an ASCII representation of the current state of the chess board into the console.
-	 * 
-	 * @param board
-	 */
+
+    @Override
 	public void displayBoard(ChessBoard board) {
 		System.out.println("K : Black");
 		System.out.println("k : White");
@@ -27,6 +23,7 @@ public class Console implements UI {
     @Override
     public void displayErrorMessage(Exception exception) {
         System.out.println("*** " + exception.getMessage() + " ***");
+        exception.printStackTrace();
     }
 
     @Override
