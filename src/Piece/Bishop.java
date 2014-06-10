@@ -3,11 +3,14 @@ package Piece;
 import GameLogic.Team;
 import PieceManipulation.*;
 
+import java.awt.*;
+
 
 public class Bishop extends Piece {
 
 	public Bishop(Team team, Location location) {
 		super(team, location);
+        setImage(getFilePath());
 	}
 	
 	@Override
@@ -20,6 +23,11 @@ public class Bishop extends Piece {
 	public String getPieceName() {
 		return "Bishop";
 	}
+
+    @Override
+    protected String getFilePath() {
+        return this.getColor() == Color.WHITE ? "ChessPieceImages/WHITE_BISHOP.PNG" : "ChessPieceImages/BLACK_BISHOP.PNG";
+    }
 	
 	@Override
 	public boolean isValidCapture(Capture capture) {

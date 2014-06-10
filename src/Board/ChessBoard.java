@@ -19,21 +19,6 @@ public class ChessBoard implements Cloneable {
 		createBoard();
 	}
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    public ChessBoard getClone() {
-        ChessBoard clone = null;
-        try {
-            clone = (ChessBoard) clone();
-        } catch(CloneNotSupportedException e) {
-
-        }
-        return clone;
-    }
-
     /**
 	 * Adds all the squares to the 2 dimensional array that makes up the board itself. Every Square has a color that alternates and 
 	 * also has the location of where the square is.
@@ -42,21 +27,9 @@ public class ChessBoard implements Cloneable {
 	private void createBoard() {
 		for (int i = 0; i < BOARD_ROWS; i++) {
 			for (int j = 0; j < BOARD_COLUMNS; j++) {
-				board[i][j] = new Square(getColor(i, j), new Location(j, i));
+				board[i][j] = new Square(new Location(j, i));
 			}
 		}
-	}
-	
-	/**
-	 * Determines what the color will be for the squares that are added to the board, based off of where the square is 
-	 * located in the array.
-	 * 
-	 * @param x the x location of a square
-	 * @param y the y location of a square
-	 * @return the color that the square
-	 */
-	private Color getColor(int x, int y) {
-		return (x + y) % 2 == 0 ? Color.WHITE : Color.GRAY;
 	}
 	
 	/**
@@ -104,6 +77,9 @@ public class ChessBoard implements Cloneable {
 		boolean actionCompleted = false;
         if(canMove(move)) {
             movePiece(move.getInitialLocation(), move.getEndLocation());
+            if(getPieceAt(move.getEndLocation()) instanceof Pawn) {
+                ((Pawn) getPieceAt(move.getEndLocation())).pawnHasMoved();
+            }
             actionCompleted = true;
         } else {
             throw new MovementException("The move is invalid.");
@@ -140,6 +116,9 @@ public class ChessBoard implements Cloneable {
 		boolean actionCompleted = false;
         if(canCapture(capture)) {
             movePiece(capture.getInitialLocation(), capture.getEndLocation());
+            if(getPieceAt(capture.getEndLocation()) instanceof Pawn) {
+                ((Pawn) getPieceAt(capture.getEndLocation())).pawnHasMoved();
+            }
             actionCompleted = true;
         } else {
             throw new CaptureException("The capture is invalid.");
@@ -154,9 +133,6 @@ public class ChessBoard implements Cloneable {
      * @param end the end location of a move or capture
      */
 	public void movePiece(Location initial, Location end) {
-		if(getPieceAt(initial) instanceof Pawn) {
-			((Pawn) getPieceAt(initial)).pawnHasMoved();
-		}
 		getSquareAt(end).setPiece(getPieceAt(initial));
 		getSquareAt(initial).setPiece(null);
 	}
@@ -229,7 +205,13 @@ public class ChessBoard implements Cloneable {
 	public Piece getPieceAt(Location location) {
 		return getSquareAt(location).getPiece();
 	}
-	
+
+    /**
+     * Gets the location of a particular piece on the board.
+     *
+     * @param piece the piece you are looking for
+     * @return the location of the piece you are looking for
+     */
 	public Location getPieceLocation(Piece piece) {
 		Location pieceLocation = null;
 		for(int i = 0; i < BOARD_ROWS; i++) {
@@ -243,5 +225,40 @@ public class ChessBoard implements Cloneable {
 		}
 		return pieceLocation;
 	}
+
+    /**
+     * Checks too see if the action results in a pawn reaching the opposite side of the board.
+     *
+     * @param action the action that was completed
+     * @return a pawn if the action does call for a pawn promotion, otherwise it is null
+     */
+    public Pawn pawnPromotionCheck(ChessAction action) {
+        Pawn pawn = null;
+        int whitePawnPromotionY = 1;
+        int blackPawnPromotionY = 8;
+        Location endLocation = action.getEndLocation();
+        Piece movedPiece = getPieceAt(action.getEndLocation());
+        if(endLocation.getY() == whitePawnPromotionY && getPieceAt(action.getEndLocation()).getColor() == Color.WHITE) {
+            if(movedPiece instanceof Pawn) {
+                pawn = (Pawn) movedPiece;
+            }
+        } else if(endLocation.getY() == blackPawnPromotionY && movedPiece.getColor() == Color.BLACK) {
+            if(movedPiece instanceof Pawn) {
+                pawn = (Pawn) movedPiece;
+            }
+        }
+        return pawn;
+    }
+
+    /**
+     * Replaces a pawn that you are promoting with a new piece on the board.
+     *
+     * @param pawn the pawn that is being promoted
+     * @param newPiece the new piece as a result of promoting the pawn
+     */
+    public void promotePawn(Pawn pawn, Piece newPiece) {
+        getSquareAt(pawn.getLocation()).setPiece(newPiece);
+        pawn.promote(newPiece, this);
+    }
 	
 }

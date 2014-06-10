@@ -3,6 +3,9 @@ package Piece;
 import GameLogic.Team;
 import PieceManipulation.*;
 
+import java.awt.*;
+import java.net.URL;
+
 
 public class Knight extends Piece {
 	
@@ -11,7 +14,13 @@ public class Knight extends Piece {
 	
 	public Knight(Team team, Location location) {
 		super(team, location);
+        setImage(getFilePath());
 	}
+
+    @Override
+    protected String getFilePath() {
+        return this.getColor() == Color.WHITE ? "ChessPieceImages/WHITE_KNIGHT.PNG" : "ChessPieceImages/BLACK_KNIGHT.PNG";
+    }
 	
 	@Override
 	public boolean isValidMove(Movement move) {

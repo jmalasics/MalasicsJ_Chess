@@ -1,5 +1,6 @@
 package Parser;
 
+import GameLogic.Team;
 import Piece.*;
 import PieceFactory.*;
 import PieceManipulation.ChessAction;
@@ -26,20 +27,24 @@ public class PlaceParser implements Parsable {
     public static final int PLACEMENT_X_COORD = 2;
     public static final int PLACEMENT_Y_COORD = 3;
 
-    public PlaceParser(UI ui) {
+    public PlaceParser(UI ui, Team whiteTeam, Team blackTeam) {
         this.ui = ui;
         placePattern = Pattern.compile("([bknpqr])([dl])([a-h][1-8])");
-        createPieceFactories();
+        createPieceFactories(whiteTeam, blackTeam);
     }
 
-    private void createPieceFactories() {
+    /**
+     * Creates the hashmap that contains the character for the piece as the key and the factory to make the piece as the value.
+     *
+     */
+    private void createPieceFactories(Team whiteTeam, Team blackTeam) {
         pieceFactories = new HashMap<Character, PieceFactory>();
-        pieceFactories.put('p', new PawnFactory());
-        pieceFactories.put('r', new RookFactory());
-        pieceFactories.put('n', new KnightFactory());
-        pieceFactories.put('b', new BishopFactory());
-        pieceFactories.put('q', new QueenFactory());
-        pieceFactories.put('k', new KingFactory());
+        pieceFactories.put('p', new PawnFactory(whiteTeam, blackTeam));
+        pieceFactories.put('r', new RookFactory(whiteTeam, blackTeam));
+        pieceFactories.put('n', new KnightFactory(whiteTeam, blackTeam));
+        pieceFactories.put('b', new BishopFactory(whiteTeam, blackTeam));
+        pieceFactories.put('q', new QueenFactory(whiteTeam, blackTeam));
+        pieceFactories.put('k', new KingFactory(whiteTeam, blackTeam));
     }
 
     @Override
@@ -65,19 +70,26 @@ public class PlaceParser implements Parsable {
     @Override
     public void printAction(ChessAction action) {
         Placement placement = (Placement) action;
-        ui.displayLogMessage("A " + printPieceColor(placement.getPiece()) + " " + placement.getPiece().getPieceName() + " is placed at " + placement.getLocation().toString() + ".");
+        ui.displayLogMessage("A " + placement.getPiece().getTeam().toString() + " " + placement.getPiece().getPieceName() + " is placed at " + placement.getLocation().toString() + ".");
     }
 
-    private String printPieceColor(Piece piece) {
+    /**
+     * Gets the string for the color of the piece.
+     *
+     * @param piece the piece you wish to get the color string for
+     * @return the string of what color the piece is
+     */
+    private String getPieceColorString(Piece piece) {
         return piece.getColor().equals(Color.WHITE) ? "White" : "Black";
     }
 
     /**
      * Determines what piece is from the character, location, and color from the place command.
      *
-     * @param charForPiece
-     * @param color
-     * @return
+     * @param charForPiece the character of the piece you wish to create
+     * @param color the character of the color for the piece you wish to create
+     * @param location the location of the piece you wish to create
+     * @return the piece that is created
      */
     private Piece determinePiece(char charForPiece, char color, Location location) {
         return pieceFactories.get(charForPiece).createPiece(color, location);

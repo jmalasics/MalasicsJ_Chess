@@ -1,7 +1,8 @@
 package Piece;
 
-import java.awt.Color;
+import java.awt.*;
 
+import Board.ChessBoard;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -16,6 +17,7 @@ public class Pawn extends Piece {
 	public Pawn(Team team, Location location) {
 		super(team, location);
 		hasMoved = false;
+        setImage(getFilePath());
 	}
 	
 	@Override
@@ -63,13 +65,25 @@ public class Pawn extends Piece {
 		hasMoved = true;
 	}
 
-    public void resetHasMoved() {
-        hasMoved = false;
-    }
-
 	public String getPieceName() {
 		return "Pawn";
 	}
+
+    @Override
+    protected String getFilePath() {
+        return this.getColor() == Color.WHITE ? "ChessPieceImages/WHITE_PAWN.PNG" : "ChessPieceImages/BLACK_PAWN.PNG";
+    }
+
+    /**
+     * Removes itself from the team and adds the new piece when promoting a pawn.
+     *
+     * @param newPiece the new piece that is replacing the pawn
+     * @param board the board you currently are playing on
+     */
+    public void promote(Piece newPiece, ChessBoard board) {
+        team.addCapturedPiece(this);
+        team.addPiece(newPiece, board);
+    }
 	
 	@Override
 	public String toString() {

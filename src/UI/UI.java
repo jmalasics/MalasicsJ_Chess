@@ -1,7 +1,8 @@
 package UI;
 
 import Board.ChessBoard;
-import PieceManipulation.*;
+import GameLogic.Team;
+import PieceManipulation.ChessAction;
 
 /**
  * Created by jmalasics on 5/14/14.
@@ -11,9 +12,8 @@ public interface UI {
     /**
      * Displays the board using whatever the medium the UI uses.
      *
-     * @param board the board that you are currently playing the game on
      */
-    public void displayBoard(ChessBoard board);
+    public void displayBoard();
 
     /**
      * Displays an error message.
@@ -42,5 +42,7 @@ public interface UI {
      * @param string the check or checkmate message
      */
     public void displayCheckOrCheckmateMessage(String string);
+
+    public ChessAction getAction(Team currentTeam, Team otherTeam);
 
 }

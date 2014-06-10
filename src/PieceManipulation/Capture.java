@@ -70,5 +70,4 @@ public class Capture extends ChessAction {
     public boolean equals(Object obj) {
         return obj instanceof Capture && this.getInitialLocation().equals(((Capture) obj).getInitialLocation()) && this.getEndLocation().equals(((Capture) obj).getEndLocation());
     }
-
 }

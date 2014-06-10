@@ -3,11 +3,14 @@ package Piece;
 import GameLogic.Team;
 import PieceManipulation.*;
 
+import java.awt.*;
+
 
 public class Rook extends Piece {
 	
 	public Rook(Team team, Location location) {
 		super(team, location);
+        setImage(getFilePath());
 	}
 	
 	@Override
@@ -28,6 +31,11 @@ public class Rook extends Piece {
 	public String getPieceName() {
 		return "Rook";
 	}
+
+    @Override
+    protected String getFilePath() {
+        return this.getColor() == Color.WHITE ? "ChessPieceImages/WHITE_ROOK.PNG" : "ChessPieceImages/BLACK_ROOK.PNG";
+    }
 	
 	@Override
 	public String toString() {
