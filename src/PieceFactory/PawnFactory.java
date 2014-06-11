@@ -1,11 +1,9 @@
 package PieceFactory;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import Piece.*;
 import PieceManipulation.Location;
-
-import java.awt.*;
-import java.net.URL;
 
 /**
  * Created by jmalasics on 5/14/14.

@@ -1,5 +1,6 @@
 package Piece;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -7,9 +8,11 @@ import java.awt.*;
 
 
 public class Rook extends Piece {
+
+    private static final int ROOK_PIECE_VALUE = 5;
 	
 	public Rook(Team team, Location location) {
-		super(team, location);
+		super(team, location, ROOK_PIECE_VALUE);
         setImage(getFilePath());
 	}
 	

@@ -1,5 +1,6 @@
 package Piece;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -8,8 +9,10 @@ import java.awt.*;
 
 public class Queen extends Piece {
 
+    private static final int QUEEN_PIECE_VALUE = 10;
+
 	public Queen(Team team, Location location) {
-		super(team, location);
+		super(team, location, QUEEN_PIECE_VALUE);
         setImage(getFilePath());
 	}
 	

@@ -1,7 +1,6 @@
 package PieceFactory;
 
-import java.awt.*;
-
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import Piece.*;
 import PieceManipulation.Location;

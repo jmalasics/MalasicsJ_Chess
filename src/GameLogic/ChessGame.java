@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import Board.ChessBoard;
-import Piece.Piece;
-import PieceManipulation.Location;
 import IO.FileIO;
 import PieceManipulation.ChessAction;
 import PieceManipulation.Placement;
@@ -41,8 +39,8 @@ public class ChessGame implements IUserInterfaceObserver, ITeamObservable {
 	public ChessGame(String path) throws FileNotFoundException {
 		board = new ChessBoard();
         observers = new ArrayList<ITeamObserver>();
-		currentTeam = new Team(Color.WHITE);
-		otherTeam = new Team(Color.BLACK);
+		currentTeam = new PlayerTeam(Color.WHITE);
+		otherTeam = new PlayerTeam(Color.BLACK);
         ui = new GUI(board, currentTeam, otherTeam, this);
         registerObserver((GUI) ui);
         fileIo = new FileIO(path, ui, currentTeam, otherTeam);

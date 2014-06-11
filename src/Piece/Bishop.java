@@ -1,5 +1,6 @@
 package Piece;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -8,8 +9,10 @@ import java.awt.*;
 
 public class Bishop extends Piece {
 
+    private static final int BISHOP_PIECE_VALUE = 4;
+
 	public Bishop(Team team, Location location) {
-		super(team, location);
+		super(team, location, BISHOP_PIECE_VALUE);
         setImage(getFilePath());
 	}
 	

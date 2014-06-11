@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import GameLogic.ChessGame;
 import GameLogic.ITeamObserver;
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import Piece.Piece;
 import PieceManipulation.ChessAction;
@@ -142,7 +143,7 @@ public class GUI implements UI, ISquareObserver, KeyListener, IUserInterfaceObse
     }
 
     @Override
-    public ChessAction getAction(Team currentTeam, Team otherTeam) {
+    public ChessAction getAction(PlayerTeam currentTeam, PlayerTeam otherTeam) {
         this.currentTeam = currentTeam;
         this.otherTeam = otherTeam;
         return currentAction;

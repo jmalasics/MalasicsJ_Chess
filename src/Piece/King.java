@@ -1,16 +1,18 @@
 package Piece;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
 import java.awt.*;
-import java.net.URL;
 
 
 public class King extends Piece {
+
+    private static final int KING_PIECE_VALUE = 15;
 	
 	public King(Team team, Location location) {
-		super(team, location);
+		super(team, location, KING_PIECE_VALUE);
         setImage(getFilePath());
 	}
 

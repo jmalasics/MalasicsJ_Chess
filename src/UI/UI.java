@@ -1,7 +1,6 @@
 package UI;
 
-import Board.ChessBoard;
-import GameLogic.Team;
+import GameLogic.PlayerTeam;
 import PieceManipulation.ChessAction;
 
 /**
@@ -43,6 +42,6 @@ public interface UI {
      */
     public void displayCheckOrCheckmateMessage(String string);
 
-    public ChessAction getAction(Team currentTeam, Team otherTeam);
+    public ChessAction getAction(PlayerTeam currentTeam, PlayerTeam otherTeam);
 
 }

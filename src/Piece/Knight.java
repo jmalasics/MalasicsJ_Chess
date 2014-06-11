@@ -1,19 +1,21 @@
 package Piece;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
 import java.awt.*;
-import java.net.URL;
 
 
 public class Knight extends Piece {
 	
 	public static final int INITIAL_MOVE = 2;
 	public static final int SECOND_MOVE = 1;
+
+    private static final int KNIGHT_PIECE_VALUE = 3;
 	
 	public Knight(Team team, Location location) {
-		super(team, location);
+		super(team, location, KNIGHT_PIECE_VALUE);
         setImage(getFilePath());
 	}
 

@@ -3,6 +3,7 @@ package Piece;
 import java.awt.*;
 
 import Board.ChessBoard;
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -11,11 +12,13 @@ public class Pawn extends Piece {
 	
 	public static final int MAX_INITIAL_MOVE = 2;
 	public static final int MAX_NORMAL_MOVE = 1;
+
+    private static final int PAWN_PIECE_VALUE = 1;
 	
 	private boolean hasMoved;
 	
 	public Pawn(Team team, Location location) {
-		super(team, location);
+		super(team, location, PAWN_PIECE_VALUE);
 		hasMoved = false;
         setImage(getFilePath());
 	}

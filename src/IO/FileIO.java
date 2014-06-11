@@ -1,6 +1,7 @@
 package IO;
 import java.io.*;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import Parser.*;
 import PieceManipulation.*;

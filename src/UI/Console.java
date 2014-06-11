@@ -1,7 +1,7 @@
 package UI;
 
 import Board.ChessBoard;
-import GameLogic.Team;
+import GameLogic.PlayerTeam;
 import Piece.Piece;
 import PieceManipulation.ChessAction;
 
@@ -17,7 +17,7 @@ public class Console implements UI {
     }
 
     @Override
-    public ChessAction getAction(Team currentTeam, Team otherTeam) {
+    public ChessAction getAction(PlayerTeam currentTeam, PlayerTeam otherTeam) {
         return promptForAction(promptForPiece(currentTeam, otherTeam), currentTeam, otherTeam);
     }
 
@@ -69,7 +69,7 @@ public class Console implements UI {
      *
      * @return the piece that the user wishes to move
      */
-    private Piece promptForPiece(Team currentTeam, Team otherTeam) {
+    private Piece promptForPiece(PlayerTeam currentTeam, PlayerTeam otherTeam) {
         Piece piece = null;
         ArrayList<Piece> movablePieces = currentTeam.getMovablePieces(board, otherTeam);
         displayMessage("Which piece do you wish to move?");
@@ -110,7 +110,7 @@ public class Console implements UI {
      * @param piece the selected piece to perform an action on
      * @return the action the user wishes to perform on the selected piece
      */
-    private ChessAction promptForAction(Piece piece, Team currentTeam, Team otherTeam) {
+    private ChessAction promptForAction(Piece piece, PlayerTeam currentTeam, PlayerTeam otherTeam) {
         ChessAction action = null;
         ArrayList<ChessAction> availableActions = piece.getMoves();
         displayMessage("Where to you wish to move?");

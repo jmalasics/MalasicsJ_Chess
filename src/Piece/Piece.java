@@ -3,8 +3,8 @@ package Piece;
 import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
-import PieceManipulation.*;
 
+import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -15,11 +15,13 @@ public abstract class Piece {
 	private ArrayList<ChessAction> possibleMoves;
     private Location location;
     private Image pieceImage;
+    private int pieceValue;
 	
-	public Piece(Team team, Location location) {
+	public Piece(Team team, Location location, int pieceValue) {
 		this.team = team;
 		possibleMoves = new ArrayList<ChessAction>();
         this.location = location;
+        this.pieceValue = pieceValue;
 	}
 
     public void setLocation(Location location) {
@@ -30,6 +32,10 @@ public abstract class Piece {
         return location;
     }
 	
+    public int getPieceValue() {
+        return pieceValue;
+    }
+
 	public void addMove(ChessAction action) {
 		possibleMoves.add(action);
 	}
