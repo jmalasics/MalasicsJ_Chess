@@ -17,17 +17,23 @@ public class PlayerTeam extends Team {
     @Override
 	public boolean performAction(ChessAction action, ChessBoard board, Team enemyTeam) throws Exception {
 		boolean actionCompleted = false;
-        if(action.executeAction(board)) {
-            getKingLocation();
-            board.getPieceAt(action.getEndLocation()).setLocation(action.getEndLocation());
-            if(action instanceof Capture) {
-                enemyTeam.addCapturedPiece(enemyTeam.getPieceAt(action.getEndLocation()));
+        if(action != null) {
+            if (action.executeAction(board)) {
+                getKingLocation();
+                board.getPieceAt(action.getEndLocation()).setLocation(action.getEndLocation());
+                if (action instanceof Capture) {
+                    enemyTeam.addCapturedPiece(enemyTeam.getPieceAt(action.getEndLocation()));
+                }
+                actionCompleted = true;
+                this.findAllAvailableMoves(board);
+                this.removeIntoCheckMoves(board, enemyTeam);
+                enemyTeam.findAllAvailableMoves(board);
+                enemyTeam.removeIntoCheckMoves(board, this);
             }
-            actionCompleted = true;
-            this.findAllAvailableMoves(board);
-            this.removeIntoCheckMoves(board, enemyTeam);
-            enemyTeam.findAllAvailableMoves(board);
-            enemyTeam.removeIntoCheckMoves(board, this);
+        }
+        Pawn pawn = board.pawnPromotionCheck(action);
+        if(pawn != null) {
+            pawnPromotion(pawn, board);
         }
 		return actionCompleted;
 	}

@@ -21,6 +21,8 @@ public class CaptureParser implements Parsable {
     public static final int SECOND_X_COORD = 3;
     public static final int SECOND_Y_COORD = 4;
 
+    private static final int BOARD_SIZE_PLUS_ONE = 9;
+
     public CaptureParser(UI ui) {
         this.ui = ui;
         capturePattern = Pattern
@@ -38,8 +40,8 @@ public class CaptureParser implements Parsable {
 
     @Override
     public ChessAction createAction(String input) {
-        int yOne = Integer.parseInt("" + input.charAt(FIRST_Y_COORD));
-        int yTwo = Integer.parseInt("" + input.charAt(SECOND_Y_COORD));
+        int yOne = BOARD_SIZE_PLUS_ONE - Integer.parseInt("" + input.charAt(FIRST_Y_COORD));
+        int yTwo = BOARD_SIZE_PLUS_ONE - Integer.parseInt("" + input.charAt(SECOND_Y_COORD));
         char xOne = input.charAt(FIRST_X_COORD);
         char xTwo = input.charAt(SECOND_X_COORD);
         Capture capture = new Capture(new Location(xOne, yOne), new Location(xTwo, yTwo));

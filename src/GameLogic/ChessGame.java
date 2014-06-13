@@ -40,7 +40,7 @@ public class ChessGame implements IUserInterfaceObserver, ITeamObservable {
 		board = new ChessBoard();
         observers = new ArrayList<ITeamObserver>();
 		currentTeam = new PlayerTeam(Color.WHITE);
-		otherTeam = new PlayerTeam(Color.BLACK);
+		otherTeam = new ComputerTeam(Color.BLACK);
         ui = new GUI(board, currentTeam, otherTeam, this);
         registerObserver((GUI) ui);
         fileIo = new FileIO(path, ui, currentTeam, otherTeam);
@@ -80,7 +80,6 @@ public class ChessGame implements IUserInterfaceObserver, ITeamObservable {
 	 */
 	public void run(ChessAction action) {
         try {
-            if(action != null) {
                 if(currentTeam.performAction(action, board, otherTeam)) {
                     if(otherTeam.isInCheck(currentTeam.getMoves())) {
                         if(otherTeam.isInCheckmate(currentTeam)) {
@@ -95,14 +94,11 @@ public class ChessGame implements IUserInterfaceObserver, ITeamObservable {
                         ui.displayMessage(otherTeam.toString() + " is unable to move. Stalemate!");
                         System.exit(0);
                     }
-                    Pawn pawn = board.pawnPromotionCheck(action);
-                    if(pawn != null) {
-                        pawnPromotion(pawn);
-                    }
+
                     ui.displayBoard();
                     changeTurn();
+                    run(null);
                 }
-            }
         } catch(Exception e) {
             ui.displayErrorMessage(e);
             ui.displayBoard();
@@ -138,15 +134,7 @@ public class ChessGame implements IUserInterfaceObserver, ITeamObservable {
         ui.displayMessage(currentTeam.toString() + "'s turn:");
     }
 
-    /**
-     * Promotes the pawn to a queen when it reaches the opposite side of the board.
-     *
-     * @param pawn the pawn that is being promoted
-     */
-    private void pawnPromotion(Pawn pawn) {
-        board.promotePawn(pawn, new Queen(pawn.getTeam(), pawn.getLocation()));
-        ui.displayMessage("Pawn has been promoted.");
-    }
+
 
     @Override
     public void update(ChessAction action) {

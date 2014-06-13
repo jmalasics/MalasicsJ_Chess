@@ -25,10 +25,10 @@ public class ComputerTeam extends Team {
     @Override
     public boolean performAction(ChessAction action, ChessBoard board, Team enemyTeam) throws Exception {
         ArrayList<ChessAction> bestActions = new ArrayList<ChessAction>();
-        copyBoard = new ChessBoard();
-        copyBoard(board);
-        int currentBestValue = 0;
+        int currentBestValue = Integer.MIN_VALUE;
         for(ChessAction chessAction : getMoves()) {
+            copyBoard = new ChessBoard();
+            copyBoard(board);
             int currentValue = determineMoveValue(chessAction, copyBoard, enemyTeam, 0, MAX_MOVES_AHEAD);
             if(currentValue > currentBestValue) {
                 bestActions = new ArrayList<ChessAction>();
@@ -39,15 +39,23 @@ public class ComputerTeam extends Team {
             }
         }
         Random rand = new Random();
-        return bestActions.get(rand.nextInt(bestActions.size())).executeAction(board);
+        ChessAction performedAction = bestActions.get(rand.nextInt(bestActions.size()));
+        if(performedAction != null) {
+            Pawn pawn = board.pawnPromotionCheck(performedAction);
+            if(pawn != null) {
+                pawnPromotion(pawn, board);
+            }
+        }
+        return performedAction.executeAction(board);
     }
 
     private void copyBoard(ChessBoard board) {
         for(int i = 0; i < ChessBoard.BOARD_ROWS; i++) {
             for(int j = 0; j < ChessBoard.BOARD_COLUMNS; j++) {
                 Piece piece = board.getSquareAt(i, j).getPiece();
-                copyBoard.getSquareAt(i, j).setPiece(piece.makePieceCopy());
-                copyBoard.getSquareAt(i, j).setPiece(board.getSquareAt(i, j).getPiece()));
+                if(piece != null) {
+                    copyBoard.getSquareAt(i, j).setPiece(piece.makePieceCopy());
+                }
             }
         }
     }

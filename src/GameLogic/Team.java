@@ -413,6 +413,15 @@ public abstract class Team {
         return board.getPieceAt(location).getPieceValue();
     }
 
+    /**
+     * Promotes the pawn to a queen when it reaches the opposite side of the board.
+     *
+     * @param pawn the pawn that is being promoted
+     */
+    protected void pawnPromotion(Pawn pawn, ChessBoard board) {
+        board.promotePawn(pawn, new Queen(pawn.getTeam(), pawn.getLocation()));
+    }
+
     @Override
     public String toString() {
         String teamColor = "White";

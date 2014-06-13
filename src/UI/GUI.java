@@ -111,6 +111,7 @@ public class GUI implements UI, ISquareObserver, KeyListener, IUserInterfaceObse
 
     @Override
     public void displayErrorMessage(Exception exception) {
+        exception.printStackTrace();
         JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
