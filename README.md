@@ -1,29 +1,46 @@
 MalasicsJ_Chess
 ===============
 
-public void promptForMove() {
-		while(true)
-		{
-			Scanner scan = new Scanner(System.in);
-			System.out.println("Make a move:");
-			String move = scan.nextLine();
-			
-			MultimoveParser mm = new MultimoveParser(ui);
-			ChessAction cm = mm.parse(move);
-			if(cm != null)
-			{
-				run(cm);
-			} else
-			{
-				CaptureParser cp = new CaptureParser(ui);
-				ChessAction c = cp.parse(move);
-				if(c != null) {
-					run(c);
-				} else {
-					MoveParser mp = new MoveParser(ui);
-					ChessAction m = mp.parse(move);
-					run(m);
-				}
-			} 
-		}	
-	}
+ @Override
+    public void update(Square square) {
+    	//Build the output string
+    	StringBuilder move = new StringBuilder();
+   
+        if(selectedPiece == null && square.isOccupied()) {
+            currentTeam.findAllAvailableMoves(board);
+            currentTeam.removeIntoCheckMoves(board, otherTeam);
+            selectedPiece = square.getPiece();
+            if(selectedPiece != null) {
+                if(currentTeam.isTeamPiece(selectedPiece.getLocation(), board)) {
+                    for(ChessAction action : selectedPiece.getMoves()) {
+                        Square endSquare = getSquareAt(action.getEndLocation());
+                        if(endSquare.isOccupied()) {
+                            endSquare.setBackground(Color.RED);
+                            endSquare.validate();
+                        } else {
+                            endSquare.setBackground(Color.GREEN);
+                            endSquare.validate();
+                        }
+                    }
+                } else {
+                    selectedPiece = null;
+                }
+            }
+        } else if(selectedPiece != null) {
+        	move.append(selectedPiece.getLocation().getX());
+        	move.append(((this.NUM_ROWS_COLS + 1) - selectedPiece.getLocation().getY()));
+        	move.append(" ");
+            currentAction = findAction(square, selectedPiece);
+            if(currentAction != null) {
+            	String kill = ((square.isOccupied()) ? "*" : "");
+                revertBackgroundColors();
+                notifyObservers();
+                move.append(selectedPiece.getLocation().getX());
+                move.append(((this.NUM_ROWS_COLS + 1) - selectedPiece.getLocation().getY()));
+                move.append(kill);
+                System.out.println(move.toString());
+                currentAction = null;
+                selectedPiece = null;
+            }
+        }
+    }
