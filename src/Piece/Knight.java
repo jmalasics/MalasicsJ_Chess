@@ -56,8 +56,13 @@ public class Knight extends Piece {
 					.getEndLocation().getY() || move.getInitialLocation().getY() - SECOND_MOVE == move
 					.getEndLocation().getY());
 	}
-	
-	@Override
+
+    @Override
+    public Piece makePieceCopy() {
+        return new Knight(this.team, this.getLocation());
+    }
+
+    @Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}

@@ -31,8 +31,13 @@ public class Bishop extends Piece {
     protected String getFilePath() {
         return this.getColor() == Color.WHITE ? "ChessPieceImages/WHITE_BISHOP.PNG" : "ChessPieceImages/BLACK_BISHOP.PNG";
     }
-	
-	@Override
+
+    @Override
+    public Piece makePieceCopy() {
+        return new Bishop(this.team, this.getLocation());
+    }
+
+    @Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}

@@ -49,8 +49,15 @@ public class Pawn extends Piece {
         }
         return isValid;
 	}
-	
-	@Override
+
+    @Override
+    public Piece makePieceCopy() {
+        Pawn copyPawn = new Pawn(this.team, this.getLocation());
+        copyPawn.hasMoved = this.hasMoved;
+        return copyPawn;
+    }
+
+    @Override
 	public boolean isValidCapture(Capture capture) {
         int distance = Math.abs(capture.getInitialLocation().getArrayY() - capture.getEndLocation().getArrayY());
         boolean isValid = false;

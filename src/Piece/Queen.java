@@ -54,6 +54,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public Piece makePieceCopy() {
+        return new Queen(this.team, this.getLocation());
+    }
+
+    @Override
     public int hashCode() {
         return super.hashCode();
     }

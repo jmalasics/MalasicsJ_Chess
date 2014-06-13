@@ -26,8 +26,13 @@ public class King extends Piece {
                 || isValidSouthEastMovement(distance, move) || isValidSouthMovement(distance, move) || isValidSouthWestMovement(distance, move)
                 || isValidWestMovement(distance, move) || isValidNorthWestMovement(distance, move));
 	}
-	
-	@Override
+
+    @Override
+    public Piece makePieceCopy() {
+        return new King(this.team, this.getLocation());
+    }
+
+    @Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}

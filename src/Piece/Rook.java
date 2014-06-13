@@ -1,6 +1,5 @@
 package Piece;
 
-import GameLogic.PlayerTeam;
 import GameLogic.Team;
 import PieceManipulation.*;
 
@@ -25,8 +24,13 @@ public class Rook extends Piece {
         return distance > 0 && (isValidNorthMovement(distance, move) || isValidEastMovement(distance, move) || isValidSouthMovement(distance, move)
                 || isValidWestMovement(distance, move));
 	}
-	
-	@Override
+
+    @Override
+    public Piece makePieceCopy() {
+        return new Rook(this.team, this.getLocation());
+    }
+
+    @Override
 	public boolean isValidCapture(Capture capture) {
 		return isValidMove(new Movement(capture.getInitialLocation(), capture.getEndLocation()));
 	}

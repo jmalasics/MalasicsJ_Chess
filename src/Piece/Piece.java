@@ -64,6 +64,8 @@ public abstract class Piece {
         return pieceImage;
     }
 
+    public abstract Piece makePieceCopy();
+
     protected void setImage(String filePath) {
         URL imageURL = this.getClass().getResource(filePath);
         pieceImage = Toolkit.getDefaultToolkit().getImage(imageURL);
